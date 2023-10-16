@@ -54,7 +54,7 @@ def call_api(query: str) -> dict:
         "weather": weather,
         "forecast": forecast,
         "units": UNITS[query["units"]],
-        "air_quality": air_quality,
+        "air_quality": air_quality.aqi,
         "historical": historical.climate,
     }
 

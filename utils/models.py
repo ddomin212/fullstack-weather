@@ -23,7 +23,7 @@ class BaseWeather(BaseModel):
 
 
 class ClimateStats(BaseModel):
-    climate: dict[str, dict[str, float | int]]
+    climate: list[dict[str, float | int]]
 
 
 class AirQuality(BaseModel):

@@ -1,5 +1,6 @@
 import os
 from dataclasses import dataclass
+from datetime import date
 
 import numpy as np
 import requests
@@ -216,30 +217,40 @@ class OpenMeteoAPI:
         url = (
             self.CLIMATE_URL
             + self.parse_query(query_params)
-            + f"&start_date={start}&end_date={end}&models=EC_Earth3P_HR&daily=temperature_2m_mean,windspeed_10m_mean,relative_humidity_2m_mean,precipitation_sum"
+            + f"&start_date={start}&end_date={end}&models=EC_Earth3P_HR&daily=temperature_2m_mean,windspeed_10m_mean,relative_humidity_2m_mean,precipitation_sum,cloudcover_mean,pressure_msl_mean"
             + units
         )
         response = requests.get(url).json()
-        climate_stats = {}
-        new_keys = ["temp", "wind_speed", "humidity", "rain"]
+        climate_stats = []
+        new_keys = [
+            "temp",
+            "wind_speed",
+            "humidity",
+            "rain",
+            "clouds",
+            "pressure",
+            "title",
+        ]
+        today = date.today().strftime("%m-%d")
         for x, *params in zip(
             response["daily"]["time"],
             response["daily"]["temperature_2m_mean"],
             response["daily"]["windspeed_10m_mean"],
             response["daily"]["relative_humidity_2m_mean"],
             response["daily"]["precipitation_sum"],
+            response["daily"]["cloudcover_mean"],
+            response["daily"]["pressure_msl_mean"],
         ):
-            year = x.split("-")[0]
-            if year not in climate_stats:
-                climate_stats[year] = {k: 0 for k in new_keys}
-            for metric, key in zip(params, new_keys):
-                if metric:
-                    climate_stats[year][key] = (
-                        metric
-                        if climate_stats[year][key] < metric
-                        else climate_stats[year][key]
-                    )
-        print(climate_stats)
+            temp_dict = {}
+            year, month_day = x.split("-", 1)
+            all_params = params + [year]
+            if month_day == today:
+                for metric, key in zip(all_params, new_keys):
+                    if metric:
+                        temp_dict[key] = metric
+                    else:
+                        temp_dict[key] = 0
+                climate_stats.append(temp_dict)
         return ClimateStats(climate=climate_stats)
 
 
