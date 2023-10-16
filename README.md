@@ -1,0 +1,1 @@
+Backend for my weather application. Built with FastAPI and Firebase.
