@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ChartView.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ChartView.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useCallback } from "react";
+import { Chart as ChartJS } from "chart.js/auto";
+import { Line } from "react-chartjs-2";
+import {
+  createChartData,
+  chartOptions,
+  setXYValues,
+} from "../utils/chartUtils";
+import SelectOptions from "./SelectOptions";
+
+/**
+ * Renders a weather chart component.
+ * @param {Object} props - The component props.
+ * @param {Array} props.items - The weather data items to display on the chart.
+ * @param {Array} props.daily - The daily weather data items to display on the chart.
+ * @param {string} props.units - The units to use for the weather data.
+ * @returns {JSX.Element} - The rendered weather chart component.
+ */
+function WeatherChart({ items, daily, units }) {
+  /**
+   * The currently selected option for the chart.
+   * @type {string}
+   */
+  const [selectedOption, setSelectedOption] = useState("rain_prob");
+
+  /**
+   * The time interval to display on the chart.
+   * @type {string}
+   */
+  const [timeInterval, setTimeInterval] = useState("8");
+
+  /**
+   * The Y-axis values for the chart.
+   * @type {Array}
+   */
+  const [yValues, setYValues] = useState(null);
+
+  /**
+   * The X-axis values for the chart.
+   * @type {Array}
+   */
+  const [xValues, setXValues] = useState(null);
+
+  /**
+   * Sets the X and Y axis values for the chart.
+   * @param {Object} params - The function parameters.
+   * @param {Array} params.items - The weather data items to display on the chart.
+   * @param {string} params.selectedOption - The currently selected option for the chart.
+   * @param {Function} params.setXValues - The function to set the X-axis values for the chart.
+   * @param {Function} params.setYValues - The function to set the Y-axis values for the chart.
+   */
+  const setXYValuesCallback = useCallback(
+    ({ items, selectedOption, setXValues, setYValues }) => {
+      setXYValues({
+        items,
+        selectedOption,
+        setXValues,
+        setYValues,
+      });
+    },
+    []
+  );
+
+  /**
+   * Sets the X and Y axis values for the chart when the component mounts or updates.
+   */
+  useEffect(() => {
+    setXYValuesCallback({
+      items:
+        timeInterval === "all_time"
+          ? daily
+          : items.slice(0, Number(timeInterval)),
+      selectedOption,
+      setXValues,
+      setYValues,
+    });
+  }, [selectedOption, timeInterval, units]);
+
+  const handleSelectChange = useCallback((event, setter) => {
+    setter(event.target.value);
+  }, []);
+
+  /**
+   * Renders the weather chart component.
+   * @returns {JSX.Element} - The rendered weather chart component with option select.
+   */
+  return (
+    &lt;div className="mt-10 items-center justify-center">
+      &lt;div className="items-center justify-start mt-6">
+        &lt;p className="text-white font-medium uppercase">Chart View&lt;/p>
+      &lt;/div>
+
+      &lt;hr className="my-2" />
+
+      &lt;SelectOptions
+        selectedOption={selectedOption}
+        setSelectedOption={setSelectedOption}
+        timeInterval={timeInterval}
+        setTimeInterval={setTimeInterval}
+        units={units}
+        handleSelectChange={handleSelectChange}
+      />
+
+      &lt;div className="mt-2">
+        &lt;Line
+          data={createChartData(xValues, yValues, selectedOption)}
+          options={chartOptions}
+        />
+      &lt;/div>
+    &lt;/div>
+  );
+}
+
+export default WeatherChart;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Forecast">Forecast</a></li><li><a href="global.html#Inputs">Inputs</a></li><li><a href="global.html#Select">Select</a></li><li><a href="global.html#SelectOptions">SelectOptions</a></li><li><a href="global.html#SunStat">SunStat</a></li><li><a href="global.html#SunStats">SunStats</a></li><li><a href="global.html#TemperatureAndDetails">TemperatureAndDetails</a></li><li><a href="global.html#TimeAndLocation">TimeAndLocation</a></li><li><a href="global.html#WeatherChart">WeatherChart</a></li><li><a href="global.html#WeatherStats">WeatherStats</a></li><li><a href="global.html#calcOffset">calcOffset</a></li><li><a href="global.html#createChartData">createChartData</a></li><li><a href="global.html#formatCurrentWeather">formatCurrentWeather</a></li><li><a href="global.html#formatHourlyWeather">formatHourlyWeather</a></li><li><a href="global.html#formatToLocalTime">formatToLocalTime</a></li><li><a href="global.html#getDailyMax">getDailyMax</a></li><li><a href="global.html#getFormattedWeatherData">getFormattedWeatherData</a></li><li><a href="global.html#getWeatherData">getWeatherData</a></li><li><a href="global.html#iconUrlFromCode">iconUrlFromCode</a></li><li><a href="global.html#setXYValues">setXYValues</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 14 2023 19:07:12 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

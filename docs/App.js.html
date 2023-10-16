@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Inputs from "./components/Inputs";
+import TimeAndLocation from "./components/TimeAndLocation";
+import TemperatureAndDetails from "./components/TemperatureAndDetails";
+import Forecast from "./components/Forecast";
+import ChartView from "./components/ChartView";
+import getFormattedWeatherData from "./services/weatherService";
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+/**
+ * The main component of the weather app.
+ * @returns {JSX.Element} - The main component of the weather app.
+ */
+function App() {
+  const [query, setQuery] = useState({ city: "berlin" });
+  const [units, setUnits] = useState("metric");
+  const [weather, setWeather] = useState(null);
+
+  /**
+   * Fetches weather data from the server and updates the state.
+   */
+  const fetchWeather = async () => {
+    const message = query.city ? query.city : "current location.";
+
+    toast.info("Fetching weather for " + message);
+
+    await getFormattedWeatherData({ ...query, units }).then((data) => {
+      toast.success(
+        `Successfully fetched weather for ${data.name}, ${data.country}.`
+      );
+
+      setWeather(data);
+    });
+  };
+
+  useEffect(() => {
+    fetchWeather();
+  }, [query, units]);
+
+  /**
+   * Formats the background gradient based on the current weather data.
+   * @returns {string} - The CSS class for the background gradient.
+   */
+  const formatBackground = () => {
+    if (!weather) return "from-cyan-700 to-blue-700";
+    const hotThreshold = units === "metric" ? 30 : 86;
+    const coldThreshold = units === "metric" ? 5 : 41;
+    if (weather.temp &lt;= hotThreshold &amp;&amp; weather.temp >= coldThreshold) {
+      return "from-cyan-700 to-blue-700";
+    } else if (weather.temp > hotThreshold) {
+      return "from-yellow-700 to-yellow-300";
+    } else {
+      return "from-blue-300 to-gray-300";
+    }
+  };
+
+  return (
+    &lt;div
+      className={`mx-auto max-w-screen-md mt-4 py-5 px-5 md:px-32 bg-gradient-to-br h-fit shadow-xl shadow-gray-400 ${formatBackground()}`}
+    >
+      &lt;Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
+
+      {weather &amp;&amp; (
+        &lt;div>
+          &lt;TimeAndLocation weather={weather} />
+          &lt;TemperatureAndDetails weather={weather} />
+
+          &lt;Forecast title="hourly forecast" items={weather.hourly} />
+          &lt;Forecast
+            title="daily forecast"
+            items={Object.values(weather.daily).slice(0, 6)}
+          />
+          &lt;ChartView
+            items={weather.hourly}
+            daily={Object.values(weather.daily).slice(0, 6)}
+            units={weather.units}
+          />
+        &lt;/div>
+      )}
+
+      &lt;ToastContainer autoClose={5000} theme="colored" newestOnTop={true} />
+    &lt;/div>
+  );
+}
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Forecast">Forecast</a></li><li><a href="global.html#Inputs">Inputs</a></li><li><a href="global.html#Select">Select</a></li><li><a href="global.html#SelectOptions">SelectOptions</a></li><li><a href="global.html#SunStat">SunStat</a></li><li><a href="global.html#SunStats">SunStats</a></li><li><a href="global.html#TemperatureAndDetails">TemperatureAndDetails</a></li><li><a href="global.html#TimeAndLocation">TimeAndLocation</a></li><li><a href="global.html#WeatherChart">WeatherChart</a></li><li><a href="global.html#WeatherStats">WeatherStats</a></li><li><a href="global.html#calcOffset">calcOffset</a></li><li><a href="global.html#createChartData">createChartData</a></li><li><a href="global.html#formatCurrentWeather">formatCurrentWeather</a></li><li><a href="global.html#formatHourlyWeather">formatHourlyWeather</a></li><li><a href="global.html#formatToLocalTime">formatToLocalTime</a></li><li><a href="global.html#getDailyMax">getDailyMax</a></li><li><a href="global.html#getFormattedWeatherData">getFormattedWeatherData</a></li><li><a href="global.html#getWeatherData">getWeatherData</a></li><li><a href="global.html#iconUrlFromCode">iconUrlFromCode</a></li><li><a href="global.html#setXYValues">setXYValues</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 14 2023 19:07:12 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
