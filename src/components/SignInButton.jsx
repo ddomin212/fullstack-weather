@@ -8,11 +8,7 @@ import React, { useEffect } from "react";
 import { auth, provider } from "../services/firebaseService";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { UilGoogle, UilUserMinus } from "@iconscout/react-unicons";
-import {
-  signOutUser,
-  signInUser,
-  refreshUserToken,
-} from "../services/authService";
+import { signOutUser, signInUser } from "../services/authService";
 
 /**
  * Handles the sign-in process when the user clicks the sign-in button.
@@ -48,11 +44,6 @@ function SignInButton({ setUserData, userData }) {
    * Refreshes the user token on mount and returns an unsubscribe function.
    * @returns {Function} - The unsubscribe function.
    */
-  useEffect(() => {
-    const unsubscribe = refreshUserToken({ setUserData });
-
-    return unsubscribe;
-  }, []);
 
   return userData ? (
     <button

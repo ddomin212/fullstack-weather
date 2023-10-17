@@ -17,20 +17,16 @@ function TimeAndLocation({ weather: { dt, timezone, name }, username }) {
    */
   return (
     <div>
-      {username ? (
-        <div className="flex items-center justify-center text-center my-3">
-          <p className="text-cyan-200 text-xl font-extralight">{`Welcome, ${
-            username.split(" ")[0]
-          }`}</p>
-        </div>
-      ) : null}
-
+      <div className="flex items-center justify-center text-center my-3">
+        <p className="text-cyan-200 text-xl font-extralight">{`Welcome, ${
+          username ? username.split(" ")[0] : "User"
+        }`}</p>
+      </div>
       <div className="flex items-center justify-center my-6">
         <p className="text-white text-xl font-extralight">
           {formatToLocalTime(dt, timezone)}
         </p>
       </div>
-
       <div className="flex items-center justify-center text-center my-3">
         <p className="text-white text-3xl font-medium">{`${name}`}</p>
       </div>

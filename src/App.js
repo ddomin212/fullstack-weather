@@ -9,21 +9,46 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { buyPremium } from "./services/accountService";
 import AirQuality from "./components/AirQuality";
+import { refreshUserToken } from "./services/authService";
 /**
  * The main component of the weather app.
  * @returns {JSX.Element} - The main component of the weather app.
  */
 function App() {
-  const [query, setQuery] = useState({ city: "berlin" });
+  const [query, setQuery] = useState(null);
   const [units, setUnits] = useState("metric");
   const [weather, setWeather] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({ tier: "" });
 
   useEffect(() => {
-    fetchWeather({ query, units, setWeather }).catch((err) => {
-      toast.error(err.message);
-    });
+    refreshUserToken({ setUserData }, () => {});
   }, [query, units]);
+
+  useEffect(() => {
+    console.log("here");
+    if (query) {
+      if (userData) {
+        fetchWeather({
+          query,
+          units,
+          setWeather,
+          token: userData.token,
+          refreshToken: userData.refreshToken,
+        }).catch((err) => {
+          toast.error(err.message);
+        });
+      } else {
+        fetchWeather({
+          query,
+          units,
+          setWeather,
+          token: "empty",
+        }).catch((err) => {
+          toast.error(err.message);
+        });
+      }
+    }
+  }, [query, units, userData?.tier]);
 
   /**
    * Formats the background gradient based on the current weather data.

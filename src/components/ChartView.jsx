@@ -92,29 +92,31 @@ function WeatherChart({ items, daily, yearly, units }) {
    * @returns {JSX.Element} - The rendered weather chart component with option select.
    */
   return (
-    <div className="mt-10 items-center justify-center">
-      <div className="items-center justify-start mt-6">
-        <p className="text-white font-medium uppercase">Chart View</p>
-      </div>
+    yearly && (
+      <div className="mt-10 items-center justify-center">
+        <div className="items-center justify-start mt-6">
+          <p className="text-white font-medium uppercase">Chart View</p>
+        </div>
 
-      <hr className="my-2" />
+        <hr className="my-2" />
 
-      <SelectOptions
-        selectedOption={selectedOption}
-        setSelectedOption={setSelectedOption}
-        timeInterval={timeInterval}
-        setTimeInterval={setTimeInterval}
-        units={units}
-        handleSelectChange={handleSelectChange}
-      />
-
-      <div className="mt-2">
-        <Line
-          data={createChartData(xValues, yValues, selectedOption)}
-          options={chartOptions}
+        <SelectOptions
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          timeInterval={timeInterval}
+          setTimeInterval={setTimeInterval}
+          units={units}
+          handleSelectChange={handleSelectChange}
         />
+
+        <div className="mt-2">
+          <Line
+            data={createChartData(xValues, yValues, selectedOption)}
+            options={chartOptions}
+          />
+        </div>
       </div>
-    </div>
+    )
   );
 }
 

@@ -86,20 +86,14 @@ const refreshUserToken = ({ setUserData }) =>
   auth.onIdTokenChanged((user) => {
     if (user) {
       const refreshToken = user.refreshToken;
-      user
-        .getIdToken()
-        .then((token) => {
-          authRequest(
-            "refresh",
-            token,
-            refreshToken,
-            user.displayName,
-            setUserData
-          );
-        })
-        .catch((err) => {
-          throw new Error(err.message);
-        });
+      const token = user.accessToken;
+      authRequest(
+        "refresh",
+        token,
+        refreshToken,
+        user.displayName,
+        setUserData
+      );
     } else {
       // User is signed out
       setUserData(null);

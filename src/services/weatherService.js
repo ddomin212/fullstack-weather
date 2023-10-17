@@ -8,16 +8,19 @@ import env from "react-dotenv";
  * @param {Object} searchParams - The search parameters to include in the request URL.
  * @returns {Promise<Object>} - A Promise that resolves to the weather data as an object.
  */
-const getWeatherData = (infoType, searchParams) => {
+const getWeatherData = (infoType, searchParams, token, refreshToken) => {
   const url = new URL(BACKEND_URL + "/weather/" + infoType);
   url.search = new URLSearchParams({ ...searchParams });
 
   const headers = new Headers();
   headers.append("Host", env.SECRET_HOST_HEADER);
+  headers.append("X-CSRF-Token", getCSRFToken());
+  headers.append("Content-Type", "application/json");
 
   const init = {
-    method: "GET",
+    method: "POST",
     headers: headers,
+    body: JSON.stringify({ token, refreshToken }),
   };
 
   return fetch(url, init).then((res) => {
@@ -34,10 +37,12 @@ const getWeatherData = (infoType, searchParams) => {
  * @param {Object} searchParams - The search parameters to include in the request URL.
  * @returns {Promise<Object>} - A Promise that resolves to the formatted weather data as an object.
  */
-const getFormattedWeatherData = async (searchParams) => {
+const getFormattedWeatherData = async (searchParams, token, refreshToken) => {
   const formattedCurrentWeather = await getWeatherData(
     searchParams.city ? "city" : "coordinates",
-    searchParams
+    searchParams,
+    token,
+    refreshToken
   ).then(formatCurrentWeather);
 
   return formattedCurrentWeather;
@@ -51,8 +56,14 @@ const getFormattedWeatherData = async (searchParams) => {
  * @param {Function} options.setWeather - The function to set the weather data.
  * @returns {Promise<void>} - A Promise that resolves when the weather data is fetched.
  */
-const fetchWeather = async ({ query, units, setWeather }) => {
-  await getFormattedWeatherData({ ...query, units })
+const fetchWeather = async ({
+  query,
+  units,
+  setWeather,
+  token,
+  refreshToken,
+}) => {
+  await getFormattedWeatherData({ ...query, units }, token, refreshToken)
     .then((data) => {
       setWeather(data);
     })
