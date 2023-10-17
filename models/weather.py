@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 
@@ -23,10 +21,14 @@ class BaseWeather(BaseModel):
 
 
 class ClimateStats(BaseModel):
+    """Pydantic model for climate statistics data validation"""
+
     climate: list[dict[str, float | int]]
 
 
 class AirQuality(BaseModel):
+    """Pydantic model for air quality data validation"""
+
     aqi: dict[str, list[int]]
 
 
@@ -56,8 +58,3 @@ class Forecast(BaseModel):
     lat: float
     lon: float
     forecasts: list[ThreeHourWeather]
-
-
-class AuthToken(BaseModel):
-    token: str
-    refreshToken: Optional[str] = None

@@ -1,24 +1,19 @@
 import os
-import re
 
-import aioredis
-import sentry_sdk
 import stripe
+from config.cfg_app import initialize_app
+from config.firebase import auth, db
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException, Request, Response
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi import Depends, HTTPException, Request, Response
 from fastapi.responses import JSONResponse, RedirectResponse
-from fastapi_limiter import FastAPILimiter
+from fastapi_csrf_protect import CsrfProtect
 from fastapi_limiter.depends import RateLimiter
-from piccolo_api.csp.middleware import CSPMiddleware
-from piccolo_api.csrf.middleware import CSRFMiddleware
+from models.security import AuthToken
 from requests.exceptions import HTTPError
-from starlette.middleware import Middleware
-from utils.api import OpenMeteoAPI, OpenWeatherAPI
-from utils.config import initialize_app
-from utils.firebase import auth, db
-from utils.models import AuthToken
+from services.open_meteo import OpenMeteoAPI
+from services.open_weather_api import OpenWeatherAPI
+from stripe.error import StripeError
+from utils.errors import handle_exception, handle_pyrebase
 from utils.settings import UNITS
 
 load_dotenv()
@@ -59,6 +54,14 @@ def call_api(query: str) -> dict:
     }
 
 
+@app.get("/csrftoken/")
+async def get_csrf_token(csrf_protect: CsrfProtect = Depends()):
+    response = JSONResponse(status_code=200, content={"csrf_token": "cookie"})
+    csrf_protect.set_csrf_cookie(response)
+    return response
+
+
+@handle_exception
 @app.get("/weather/city", dependencies=[Depends(RateLimiter(times=5, seconds=60))])
 async def weather_by_city(city: str, units: str = "metric"):
     """Get weather data for a city
@@ -74,14 +77,10 @@ async def weather_by_city(city: str, units: str = "metric"):
     Returns:
         dict: weather data for the city
     """
-    try:
-        return call_api({"q": city, "units": units})
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return call_api({"q": city, "units": units})
 
 
+@handle_exception
 @app.get(
     "/weather/coordinates", dependencies=[Depends(RateLimiter(times=5, seconds=60))]
 )
@@ -100,16 +99,17 @@ async def weather_by_coordinates(lat: float, lon: float, units: str = "metric"):
     Returns:
         dict: weather data for the set of coordinates
     """
-    try:
-        return call_api({"lat": lat, "lon": lon, "units": units})
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return call_api({"lat": lat, "lon": lon, "units": units})
 
 
+@handle_exception
 @app.post("/login")
-async def login(authToken: AuthToken, response: Response):
+async def login(
+    authToken: AuthToken,
+    request: Request,
+    response: Response,
+    csrf_protect: CsrfProtect = Depends(),
+):
     """login user via firebase
 
     Args:
@@ -121,6 +121,7 @@ async def login(authToken: AuthToken, response: Response):
     Returns:
         dict: user details, including if the are a free or paid user
     """
+    csrf_protect.validate_csrf(request)
     try:
         user = auth.get_account_info(authToken.token)
         g_uid = user["users"][0]["localId"]
@@ -140,12 +141,19 @@ async def login(authToken: AuthToken, response: Response):
             "user": user["users"][0]["displayName"],
             "tier": tier,
         }
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    except HTTPError as e:
+        response = handle_pyrebase(e)
+        raise HTTPException(detail=response[0]["error"], status_code=response[1])
 
 
+@handle_exception
 @app.post("/refresh")
-async def refresh(authToken: AuthToken, response: Response):
+async def refresh(
+    authToken: AuthToken,
+    request: Request,
+    response: Response,
+    csrf_protect: CsrfProtect = Depends(),
+):
     """refresh firebase JWT token
 
     Args:
@@ -154,56 +162,78 @@ async def refresh(authToken: AuthToken, response: Response):
     Returns:
         dict: success or not, including if the user is a free or paid user
     """
+    csrf_protect.validate_csrf(request)
     try:
         user = auth.refresh(authToken.refreshToken)
         response.set_cookie(key="token", value=user["idToken"])
         tier = db.child("users").child(user["userId"]).get().val()["tier"]
         return {"detail": "Refresh successful", "status_code": 200, "tier": tier}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    except HTTPError as e:
+        response = handle_pyrebase(e)
+        raise HTTPException(detail=response[0]["error"], status_code=response[1])
 
 
+@handle_exception
 @app.get("/logout")
 async def logout():
     """logout user from firebase"""
     return {"message": "Logout successful"}
 
 
+@handle_exception
 @app.post("/payment")
-async def create_checkout_session(authToken: AuthToken):
-    user = auth.get_account_info(authToken.token)
-    payment_session = stripe.checkout.Session.create(
-        mode="payment",
-        payment_method_types=["card"],
-        line_items=[
-            {
-                "price": "price_1O1XLGIkzhBkf9zarOv31qM0",
-                "quantity": 1,
-            },
-        ],
-        success_url=f"""http://localhost:8000/payment-success?session_id={"{CHECKOUT_SESSION_ID}"}&guid={user["users"][0]['localId']}""",
-        cancel_url=f"http://localhost:8000/cancel",
-    )
-    db.child("users").child(user["users"][0]["localId"]).update(
-        {"verificationToken": payment_session.id}
-    )
-    return {"id": payment_session.id, "url": payment_session.url, "status_code": 200}
+async def create_checkout_session(
+    authToken: AuthToken,
+    request: Request,
+    response: Response,
+    csrf_protect: CsrfProtect = Depends(),
+):
+    csrf_protect.validate_csrf(request)
+    try:
+        user = auth.get_account_info(authToken.token)
+        payment_session = stripe.checkout.Session.create(
+            mode="payment",
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price": "price_1O1XLGIkzhBkf9zarOv31qM0",
+                    "quantity": 1,
+                },
+            ],
+            success_url=f"""http://localhost:8000/payment-success?session_id={"{CHECKOUT_SESSION_ID}"}&guid={user["users"][0]['localId']}""",
+            cancel_url=f"http://localhost:8000/cancel",
+        )
+        db.child("users").child(user["users"][0]["localId"]).update(
+            {"verificationToken": payment_session.id}
+        )
+        return {
+            "id": payment_session.id,
+            "url": payment_session.url,
+            "status_code": 200,
+        }
+    except HTTPError as e:
+        response = handle_pyrebase(e)
+        raise HTTPException(detail=response[0]["error"], status_code=response[1])
+    except StripeError as e:
+        raise HTTPException(detail=e.user_message, status_code=e.http_status)
 
 
+@handle_exception
 @app.get("/payment-success")
 async def payment_success(session_id: str, guid: str):
-    verification_token = db.child("users").child(guid).get().val()["verificationToken"]
-    if session_id == verification_token:
-        db.child("users").child(guid).update({"tier": "paid"})
-        return RedirectResponse(url=f"http://localhost:3000/")
-
-
-# except HTTPError as e:
-#     message_regex = re.compile(r'"message": "([^"]+)"')
-#     match = message_regex.search(str(e))
-
-#     if match:
-#         firebase_error = match.group(1)
-#         print(firebase_error)
-
-#     raise HTTPException(status_code=400, detail=firebase_error)
+    try:
+        verification_token = (
+            db.child("users").child(guid).get().val()["verificationToken"]
+        )
+        if session_id == verification_token:
+            db.child("users").child(guid).update({"tier": "paid"})
+            return RedirectResponse(url=f"http://localhost:3000/")
+        else:
+            raise HTTPException(
+                detail="Verification token does not match", status_code=401
+            )
+    except HTTPError as e:
+        response = handle_pyrebase(e)
+        raise HTTPException(detail=response[0]["error"], status_code=response[1])
+    except KeyError:
+        raise HTTPException(detail="Verification token not found", status_code=400)
