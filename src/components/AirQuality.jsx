@@ -1,7 +1,6 @@
 import React from "react";
 import { formatToLocalTime } from "../utils/timeUtils";
 import { AIR_QUALITY_METRICS } from "../utils/settings";
-import { useEffect, useState } from "react";
 
 /**
  * Renders a forecast component.

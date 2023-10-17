@@ -7,6 +7,7 @@ import {
   UilEye,
   UilRaindrops,
 } from "@iconscout/react-unicons";
+import WeatherInfo from "./WeatherInfo";
 
 /**
  * Renders a weather stats component.
@@ -68,21 +69,6 @@ function WeatherStats({
       },
     ],
   ];
-
-  /**
-   * The weather info data to display.
-   * @property {JSX.Element} icon - The icon to display for the info.
-   * @property {string} label - The label for the info.
-   * @property {string} value - The value for the info.
-   */
-  function WeatherInfo({ icon, label, value }) {
-    return (
-      <div className="flex font-light text-sm items-center justify-start">
-        {icon}
-        {label}:<span className="font-medium ml-1">{value}</span>
-      </div>
-    );
-  }
 
   /**
    * Renders the weather stats component.

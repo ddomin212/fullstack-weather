@@ -1,28 +1,5 @@
 import React from "react";
-
-/**
- * Renders a select component.
- * @param {Object} props - The component props.
- * @param {string} props.value - The currently selected value.
- * @param {Function} props.onChange - The function to call when the selected value changes.
- * @param {Array} props.options - The options to display in the select.
- * @returns {JSX.Element} - The rendered select component.
- */
-function Select({ value, onChange, options }) {
-  /**
-   * Renders the select component.
-   * @returns {JSX.Element} - The rendered select component.
-   */
-  return (
-    <select className="custom-select" value={value} onChange={onChange}>
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  );
-}
+import SelectItem from "./SelectItem";
 
 /**
  * Renders a select options component.
@@ -66,12 +43,12 @@ function SelectOptions({
   return (
     <>
       <div className="flex items-center justify-between mt-6">
-        <Select
+        <SelectItem
           value={selectedOption}
           onChange={(e) => handleSelectChange(e, setSelectedOption)}
           options={options}
         />
-        <Select
+        <SelectItem
           value={timeInterval}
           onChange={(e) => handleSelectChange(e, setTimeInterval)}
           options={timeIntervalOptions}
