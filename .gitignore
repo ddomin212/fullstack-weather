@@ -3,3 +3,4 @@
 **/__pycache__
 **/firebase.py
 /legacy
+**.sqlite

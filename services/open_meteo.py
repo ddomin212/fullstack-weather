@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
 import requests
+import requests_cache
 from fastapi import HTTPException
 from models.weather import AirQuality, ClimateStats
 from utils.parsers.open_meteo import OpenMeteoParser
-from utils.services import parse_query
+from utils.services import parse_query, units_appendix
 
 
 @dataclass
@@ -13,16 +14,39 @@ class OpenMeteoAPI:
     CLIMATE_URL = "https://climate-api.open-meteo.com/v1/climate?"
     parser = OpenMeteoParser()
 
-    def parse_query(self, params) -> str:
-        """Convert a dict of query params to a string that can be used in a URL
+    def get_api_response(
+        self,
+        type: str,
+        additional_params: str,
+        query_params: dict[str, float | str],
+        units: str = "",
+    ) -> dict:
+        """Get response from OpenWeatherMap API
 
         Args:
-            params: Query params for the API call
+            type: Type of API call
+            query_params: Query params for the API call
+            additional_params: Additional params for the API call
+            units: Units of measurement for the API call
 
         Returns:
-            str: Query params as a string
+            dict: Response from OpenWeatherMap API
+
+        Raises:
+            HTTPException: If the API call returns an error, propage the error to the client
         """
-        return "&".join([f"{key}={value}" for key, value in params.items()])
+        query_params = parse_query(query_params)
+        url = f"https://{type}-api.open-meteo.com/v1/{type}?{query_params}&{additional_params}{units}"
+        cache_expire_after = 3600 if type == "air-quality" else 86400
+        session = requests_cache.CachedSession(
+            "demo_cache", expire_after=cache_expire_after
+        )
+        response = session.get(url).json()
+        if "error" in response and response["error"] == True:
+            raise HTTPException(
+                status_code=int(response["cod"]), detail=response["message"]
+            )
+        return response
 
     def get_air_quality(self, query_params: dict[str, float | str]) -> AirQuality:
         """Get the air quality for a location (latitude, longitude)
@@ -36,33 +60,12 @@ class OpenMeteoAPI:
         Returns:
             AirQuality: air quality data for the location according to European AQI
         """
-        url = (
-            self.AIR_QUALITY_URL
-            + parse_query(query_params)
-            + "&hourly=european_aqi,european_aqi_pm2_5,european_aqi_pm10,european_aqi_no2,european_aqi_o3,european_aqi_so2"
+        response = self.get_api_response(
+            "air-quality",
+            "hourly=european_aqi,european_aqi_pm2_5,european_aqi_pm10,european_aqi_no2,european_aqi_o3,european_aqi_so2",
+            query_params,
         )
-        response = requests.get(url).json()
-        if "error" in response:
-            raise HTTPException(
-                status_code=400,
-                detail="Cannot fetch air quality data for this location",
-            )
         return self.parser.air_quality(response)
-
-    def units_appendix(self, units: str) -> str:
-        """Append units to the URL for the API call according to query
-
-        Args:
-            units: units of measurement, can be metric or imperial. Defaults to "metric".
-
-        Returns:
-            str: units of measurement for the API call
-        """
-        return (
-            "&temperature_unit=fahrenheit&windspeed_unit=mph"
-            if units == "imperial"
-            else "&windspeed_unit=ms"
-        )
 
     def get_historical_data(
         self,
@@ -83,17 +86,11 @@ class OpenMeteoAPI:
         Returns:
             ClimateStats: historical data for the location
         """
-        units = self.units_appendix(query_params.pop("units"))
-        url = (
-            self.CLIMATE_URL
-            + parse_query(query_params)
-            + f"&start_date={start}&end_date={end}&models=EC_Earth3P_HR&daily=temperature_2m_mean,windspeed_10m_mean,relative_humidity_2m_mean,precipitation_sum,cloudcover_mean,pressure_msl_mean"
-            + units
+        units = units_appendix(query_params.pop("units"))
+        response = self.get_api_response(
+            "climate",
+            f"start_date={start}&end_date={end}&models=EC_Earth3P_HR&daily=temperature_2m_mean,windspeed_10m_mean,relative_humidity_2m_mean,precipitation_sum,cloudcover_mean,pressure_msl_mean",
+            query_params,
+            units,
         )
-        response = requests.get(url).json()
-        if "error" in response:
-            raise HTTPException(
-                status_code=400,
-                detail="Cannot fetch historical data for this location",
-            )
         return self.parser.historical_data(response)

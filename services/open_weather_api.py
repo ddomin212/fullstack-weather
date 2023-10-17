@@ -2,6 +2,7 @@ import os
 from dataclasses import dataclass
 
 import requests
+import requests_cache
 from fastapi import HTTPException
 from models.weather import CurrentWeather, Forecast
 from utils.parsers.open_weather import OpenWeatherParser
@@ -54,33 +55,13 @@ class OpenWeatherAPI:
         """
         query_params = parse_query(query_params)
         url = f"https://api.openweathermap.org/data/2.5/{type}?appid={self.api_key}&{query_params}"
-        response = requests.get(url).json()
-        if self.is_error_message(response):
+        cache_expire_after = 3600 if type == "forecast" else 600
+        session = requests_cache.CachedSession(
+            "demo_cache", expire_after=cache_expire_after
+        )
+        response = session.get(url).json()
+        if int(response["cod"]) >= 400 and int(response["cod"]) < 600:
             raise HTTPException(
                 status_code=int(response["cod"]), detail=response["message"]
             )
         return response
-
-    def parse_query(self, params: dict[str, float | str]) -> str:
-        """Convert a dict of query params to a string that can be used in a URL
-
-        Args:
-            params: Query params for the API call
-
-        Returns:
-            str: Query params as a string
-        """
-        return "&".join([f"{key}={value}" for key, value in params.items()])
-
-    def is_error_message(
-        self, response: dict[str, int | list[dict[str, str]] | dict[str, float | int]]
-    ) -> bool:
-        """Returns True if the response is an error message (i.e. the API call failed)
-
-        Args:
-            response: Response from OpenWeatherMap API
-
-        Returns:
-            bool: True if the response is an error message, False otherwise
-        """
-        return int(response["cod"]) >= 400 and int(response["cod"]) < 600

@@ -15,6 +15,7 @@ from models.security import CsrfSettings
 def initialize_middleware(app: FastAPI) -> None:
     origins = ["http://localhost:3000", "http://192.168.50.47:3000"]
 
+    # Set all CORS enabled origins
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
@@ -23,6 +24,7 @@ def initialize_middleware(app: FastAPI) -> None:
         allow_headers=["*"],
     )
 
+    # Set trusted hosts
     app.add_middleware(
         TrustedHostMiddleware,
         allowed_hosts=[
@@ -32,10 +34,12 @@ def initialize_middleware(app: FastAPI) -> None:
         ],
     )
 
+    # Set CSRF protection
     @CsrfProtect.load_config
     def get_csrf_config():
         return CsrfSettings()
 
+    # Set API rate limiting
     @app.on_event("startup")
     async def startup():
         redis = await aioredis.from_url(
@@ -45,6 +49,9 @@ def initialize_middleware(app: FastAPI) -> None:
 
 
 def initialize_app() -> FastAPI:
+    """Initialize the FastAPI application with various middleware and settings."""
+
+    # Initialize Sentry logging and monitoring
     sentry_sdk.init(
         dsn=os.getenv("SENTRY_DSN"),
     )
@@ -60,8 +67,10 @@ def initialize_app() -> FastAPI:
             content={"message": exc.detail},
         )
 
+    # Capture CSRF errors and send them to Sentry
     @app.exception_handler(CsrfProtectError)
     def csrf_protect_exception_handler(request: Request, exc: CsrfProtectError):
+        sentry_sdk.capture_exception(exc)
         return JSONResponse(
             status_code=exc.status_code, content={"detail": exc.message}
         )

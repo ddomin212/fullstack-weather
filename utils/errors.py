@@ -1,6 +1,7 @@
 import re
 
 from fastapi import HTTPException
+from requests.exceptions import HTTPError
 
 
 def handle_pyrebase(e):
