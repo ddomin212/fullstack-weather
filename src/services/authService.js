@@ -5,6 +5,7 @@
  */
 import { BACKEND_URL } from "../utils/settings";
 import { auth } from "../services/firebaseService";
+import { getCSRFToken } from "../utils/parsingUtils";
 
 /**
  * Sends a request to the backend API to verify the user token and sets the user data state variable.
@@ -15,14 +16,22 @@ import { auth } from "../services/firebaseService";
  * @param {Function} setUserData - The function to set the user data.
  */
 const authRequest = (route, token, refreshToken, user, setUserData) => {
+  const csrf_token = getCSRFToken();
   fetch(BACKEND_URL + "/" + route, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-CSRF-Token": csrf_token,
     },
     body: JSON.stringify({ token, refreshToken }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        throw new Error("Error authenticating user.");
+      }
+    })
     .then((data) => {
       setUserData({
         user,
@@ -52,9 +61,18 @@ const signInUser = ({ result, setUserData }) => {
  * @param {Function} options.setUserData - The function to set the user data.
  */
 const signOutUser = ({ setUserData }) => {
-  fetch(BACKEND_URL + "/logout").then((res) => {
-    setUserData(null);
-    console.log("Logged out!");
+  fetch(BACKEND_URL + "/logout", {
+    method: "GET",
+    headers: {
+      "X-CSRFToken": getCSRFToken(),
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      setUserData(null);
+      console.log("Logged out!");
+    } else {
+      throw new Error("Error authenticating user.");
+    }
   });
 };
 
@@ -68,15 +86,20 @@ const refreshUserToken = ({ setUserData }) =>
   auth.onIdTokenChanged((user) => {
     if (user) {
       const refreshToken = user.refreshToken;
-      user.getIdToken().then((token) => {
-        authRequest(
-          "refresh",
-          token,
-          refreshToken,
-          user.displayName,
-          setUserData
-        );
-      });
+      user
+        .getIdToken()
+        .then((token) => {
+          authRequest(
+            "refresh",
+            token,
+            refreshToken,
+            user.displayName,
+            setUserData
+          );
+        })
+        .catch((err) => {
+          throw new Error(err.message);
+        });
     } else {
       // User is signed out
       setUserData(null);

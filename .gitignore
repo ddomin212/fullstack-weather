@@ -24,3 +24,5 @@ yarn-error.log*
 
 **/firebaseConfig.js
 localhost_3000-20231014T120555.html
+.env
+**/env.js

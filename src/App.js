@@ -9,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { buyPremium } from "./services/accountService";
 import AirQuality from "./components/AirQuality";
-
 /**
  * The main component of the weather app.
  * @returns {JSX.Element} - The main component of the weather app.
@@ -21,7 +20,9 @@ function App() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    fetchWeather({ query, units, setWeather });
+    fetchWeather({ query, units, setWeather }).catch((err) => {
+      toast.error(err.message);
+    });
   }, [query, units]);
 
   /**
@@ -93,6 +94,8 @@ function App() {
           )}
         </div>
       )}
+
+      <ToastContainer autoClose={1500} theme="colored" newestOnTop={true} />
     </div>
   );
 }
