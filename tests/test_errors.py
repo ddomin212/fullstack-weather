@@ -27,7 +27,7 @@ class TestErrors(unittest.TestCase):
     def test_handle_pyrebase(self):
         def test_func():
             raise HTTPError(
-                """[Errno 400 Client Error: Bad Request for url: https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyAjRtHES5VJEZ-3gcGXdnO9bFHraNZA5kU] {
+                """[Errno 400 Client Error: Bad Request for url: URL] {
                     "error": {
                         "code": 400,
                         "message": "INVALID_ID_TOKEN",
