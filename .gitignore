@@ -1,6 +1,5 @@
 .env
 /env
 **/__pycache__
-**/firebase.py
 /legacy
 **.sqlite
