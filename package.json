@@ -20,7 +20,7 @@
     "build": "react-dotenv && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cy:run:chrome": "cypress run --browser chrome"
+    "test:e2e": "cypress run --browser electron"
   },
   "eslintConfig": {
     "extends": [
