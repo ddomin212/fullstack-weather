@@ -1,0 +1,73 @@
+name: Run backend, frontend, and e2e tests
+
+on:
+    push:
+      branches: [ main ]
+    pull_request:
+      branches: [ main ]
+
+jobs:
+    build:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+        - name: Set up Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: '3.10'
+
+        - name: Install Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: '18.8.x'
+
+        - name: Install dependencies
+          run: |
+              cd backend
+              pip install -r requirements.txt
+              cd ../frontend
+              npm install --dev
+              cd ..
+          env:
+            OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY  }}
+            REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+            REDIS_URL: ${{ secrets.REDIS_URL }}
+            REDIS_PORT: ${{ secrets.REDIS_PORT }}
+            SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+            STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
+            SECRET_HOST_HEADER: ${{ secrets.SECRET_HOST_HEADER }}
+            CSRF_SECRET_KEY: ${{ secrets.CSRF_SECRET_KEY }}
+            FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+
+        - name: Start backend
+          run: |
+              cd backend
+              uvicorn app:app --reload --host 0.0.0.0 &
+              cd ..
+
+        - name: Start frontend
+          run: |
+              cd frontend
+              npm run --host 0.0.0.0 &
+              cd ..
+          env:
+            REACT_APP_SECRET_HOST_HEADER: ${{ secrets.SECRET_HOST_HEADER }}
+            REACT_APP_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+
+        - name: Set up json env for cypress
+          run: |
+            cd frontend
+            sudo echo '${{ secrets.CYPRESS_JSON }}' > cypress.env.json
+            cd ..
+
+        - name: Wait for servers to start
+          run: |
+            sleep 10
+
+        - name: Run e2e tests
+          run: |
+            cd frontend
+            npm run test:e2e
+            cd ..
