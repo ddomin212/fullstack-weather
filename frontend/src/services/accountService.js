@@ -2,7 +2,7 @@ import { getCSRFToken } from "../utils/parsingUtils";
 
 const buyPremium = ({ userData }) => {
   const token = userData?.token;
-  fetch("http://192.168.50.47:8000/payment", {
+  fetch("http://0.0.0.0:8000/payment", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -15,7 +15,7 @@ describe("authRequest", () => {
     authRequest("auth", "abc123", "def456", "johndoe", setUserData);
 
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("http://192.168.50.47:8000/auth");
+    expect(fetch.mock.calls[0][0]).toEqual("http://0.0.0.0:8000/auth");
     expect(fetch.mock.calls[0][1].method).toEqual("POST");
     expect(fetch.mock.calls[0][1].headers).toEqual({
       "Content-Type": "application/json",
@@ -39,7 +39,7 @@ describe("signOutUser", () => {
     signOutUser({ setUserData });
 
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("http://192.168.50.47:8000/logout");
+    expect(fetch.mock.calls[0][0]).toEqual("http://0.0.0.0:8000/logout");
     expect(fetch.mock.calls[0][1].method).toEqual("GET");
     expect(fetch.mock.calls[0][1].headers).toEqual({
       "X-CSRFToken": "test",
@@ -63,7 +63,7 @@ describe("signInUser", () => {
     signInUser({ result, setUserData });
 
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("http://192.168.50.47:8000/login");
+    expect(fetch.mock.calls[0][0]).toEqual("http://0.0.0.0:8000/login");
     expect(fetch.mock.calls[0][1].method).toEqual("POST");
     expect(fetch.mock.calls[0][1].headers).toEqual({
       "Content-Type": "application/json",

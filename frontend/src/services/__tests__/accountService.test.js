@@ -17,7 +17,7 @@ describe("buyPremium", () => {
     buyPremium({ userData });
 
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("http://192.168.50.47:8000/payment");
+    expect(fetch.mock.calls[0][0]).toEqual("http://0.0.0.0:8000/payment");
     expect(fetch.mock.calls[0][1].method).toEqual("POST");
     expect(fetch.mock.calls[0][1].headers).toEqual({
       "Content-Type": "application/json",
