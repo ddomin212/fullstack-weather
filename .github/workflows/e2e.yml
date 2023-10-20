@@ -30,6 +30,12 @@ jobs:
               cd ../frontend
               npm install --dev
               cd ..
+
+        - name: Start backend
+          run: |
+              cd backend
+              uvicorn app:app --host 0.0.0.0 &
+              cd ..
           env:
             OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY  }}
             REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
@@ -41,16 +47,10 @@ jobs:
             CSRF_SECRET_KEY: ${{ secrets.CSRF_SECRET_KEY }}
             FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
 
-        - name: Start backend
-          run: |
-              cd backend
-              uvicorn app:app --reload --host 0.0.0.0 &
-              cd ..
-
         - name: Start frontend
           run: |
               cd frontend
-              npm run --host 0.0.0.0 &
+              npm start --host 0.0.0.0 &
               cd ..
           env:
             REACT_APP_SECRET_HOST_HEADER: ${{ secrets.SECRET_HOST_HEADER }}
