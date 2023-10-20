@@ -1,0 +1,25 @@
+name: Jest
+
+on:
+  push:
+    branches: [ frontend ]
+  pull_request:
+    branches: [ frontend ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.8.x'
+    - name: Install dependencies
+      run: npm install --dev
+    - name: Run tests
+      run: npm test
+      env:
+        REACT_APP_SECRET_HOST_HEADER: ${{ secrets.SECRET_HOST_HEADER }}
+        REACT_APP_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
