@@ -20,3 +20,6 @@ jobs:
       run: npm install --dev
     - name: Run tests
       run: npm test
+      env:
+        REACT_APP_SECRET_HOST_HEADER: ${{ secrets.SECRET_HOST_HEADER }}
+        REACT_APP_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
