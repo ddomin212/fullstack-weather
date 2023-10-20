@@ -79,8 +79,9 @@ function WeatherStats({
       {weatherInfoData.map((col, idx1) => (
         <div
           className={`flex flex-col space-y-2 ${
-            idx1 == 1 ? "hidden xs:flex" : ""
+            idx1 === 1 ? "hidden xs:flex" : ""
           }`}
+          key={idx1}
         >
           {col.map((item, idx2) => (
             <WeatherInfo

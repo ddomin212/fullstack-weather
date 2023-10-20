@@ -13,7 +13,7 @@ import SelectOptions from "./SelectOptions";
  * @param {Object} props - The component props.
  * @param {Array} props.items - The weather data items to display on the chart.
  * @param {Array} props.daily - The daily weather data items to display on the chart.
- * @param {string} props.units - The units to use for the weather data.
+ * @param {Object} props.units - The units to use for the weather data.
  * @returns {JSX.Element} - The rendered weather chart component.
  */
 function WeatherChart({ items, daily, yearly, units }) {
@@ -83,17 +83,16 @@ function WeatherChart({ items, daily, yearly, units }) {
     });
   }, [selectedOption, timeInterval, units]);
 
-  const handleSelectChange = useCallback((event, setter) => {
-    setter(event.target.value);
-  }, []);
-
   /**
    * Renders the weather chart component.
    * @returns {JSX.Element} - The rendered weather chart component with option select.
    */
   return (
     yearly && (
-      <div className="mt-10 items-center justify-center">
+      <div
+        className="mt-10 items-center justify-center"
+        data-testid="chart-view"
+      >
         <div className="items-center justify-start mt-6">
           <p className="text-white font-medium uppercase">Chart View</p>
         </div>
@@ -106,11 +105,11 @@ function WeatherChart({ items, daily, yearly, units }) {
           timeInterval={timeInterval}
           setTimeInterval={setTimeInterval}
           units={units}
-          handleSelectChange={handleSelectChange}
         />
 
         <div className="mt-2">
           <Line
+            data-testid="chart-js"
             data={createChartData(xValues, yValues, selectedOption)}
             options={chartOptions}
           />

@@ -8,13 +8,24 @@ import React from "react";
  * @param {Array} props.options - The options to display in the select.
  * @returns {JSX.Element} - The rendered select component.
  */
-function SelectItem({ value, onChange, options }) {
+function SelectItem({
+  value,
+  handleSelectChange,
+  options,
+  setter,
+  data_testid,
+}) {
   /**
    * Renders the select component.
    * @returns {JSX.Element} - The rendered select component.
    */
   return (
-    <select className="custom-select" value={value} onChange={onChange}>
+    <select
+      className="custom-select"
+      value={value}
+      onChange={(e) => handleSelectChange(e, setter)}
+      data-testid={data_testid}
+    >
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

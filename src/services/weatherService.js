@@ -1,6 +1,6 @@
 import formatCurrentWeather, { getCSRFToken } from "../utils/parsingUtils";
 import { BACKEND_URL } from "../utils/settings";
-import env from "react-dotenv";
+import urlParse from "url-parse";
 
 /**
  * Fetches weather data from the server.
@@ -9,11 +9,11 @@ import env from "react-dotenv";
  * @returns {Promise<Object>} - A Promise that resolves to the weather data as an object.
  */
 const getWeatherData = (infoType, searchParams, token, refreshToken) => {
-  const url = new URL(BACKEND_URL + "/weather/" + infoType);
-  url.search = new URLSearchParams({ ...searchParams });
+  const url = urlParse(BACKEND_URL + "/weather/" + infoType, true);
+  url.query = { ...searchParams };
 
   const headers = new Headers();
-  headers.append("Host", env.SECRET_HOST_HEADER);
+  headers.append("Host", "hostname");
   headers.append("X-CSRF-Token", getCSRFToken());
   headers.append("Content-Type", "application/json");
 
@@ -23,7 +23,7 @@ const getWeatherData = (infoType, searchParams, token, refreshToken) => {
     body: JSON.stringify({ token, refreshToken }),
   };
 
-  return fetch(url, init).then((res) => {
+  return fetch(url.toString(), init).then((res) => {
     if (res.status === 200) {
       return res.json();
     } else {
@@ -43,7 +43,11 @@ const getFormattedWeatherData = async (searchParams, token, refreshToken) => {
     searchParams,
     token,
     refreshToken
-  ).then(formatCurrentWeather);
+  )
+    .then(formatCurrentWeather)
+    .catch((err) => {
+      throw new Error("Error fetching weather data.");
+    });
 
   return formattedCurrentWeather;
 };
@@ -68,8 +72,10 @@ const fetchWeather = async ({
       setWeather(data);
     })
     .catch((err) => {
-      throw new Error(err.message);
+      throw new Error("Error fetching weather data.");
     });
 };
 
 export default fetchWeather;
+
+export { getWeatherData, getFormattedWeatherData };

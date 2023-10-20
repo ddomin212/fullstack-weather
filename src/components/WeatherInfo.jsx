@@ -8,7 +8,10 @@ import React from "react";
  */
 function WeatherInfo({ icon, label, value }) {
   return (
-    <div className="flex font-light text-sm items-center justify-start">
+    <div
+      data-testid={`weather-info-${label.toLowerCase()}`}
+      className="flex font-light text-sm items-center justify-start"
+    >
       {icon}
       {label}:<span className="font-medium ml-1">{value}</span>
     </div>

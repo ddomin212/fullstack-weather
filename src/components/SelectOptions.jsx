@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import SelectItem from "./SelectItem";
 
 /**
@@ -18,8 +18,11 @@ function SelectOptions({
   timeInterval,
   setTimeInterval,
   units,
-  handleSelectChange,
 }) {
+  const handleSelectChange = useCallback((event, setter) => {
+    setter(event.target.value);
+  }, []);
+
   const options = [
     { value: "rain_prob", label: "Rain probability (%)" },
     { value: "rain", label: "Rain amount (mm/h)" },
@@ -45,13 +48,17 @@ function SelectOptions({
       <div className="flex items-center justify-between mt-6">
         <SelectItem
           value={selectedOption}
-          onChange={(e) => handleSelectChange(e, setSelectedOption)}
+          handleSelectChange={handleSelectChange}
           options={options}
+          setter={setSelectedOption}
+          data_testid={"select-option"}
         />
         <SelectItem
           value={timeInterval}
-          onChange={(e) => handleSelectChange(e, setTimeInterval)}
+          handleSelectChange={handleSelectChange}
           options={timeIntervalOptions}
+          setter={setTimeInterval}
+          data_testid={"select-time-interval"}
         />
       </div>
     </>

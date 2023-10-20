@@ -26,3 +26,6 @@ yarn-error.log*
 localhost_3000-20231014T120555.html
 .env
 **/env.js
+
+cypress.env.json
+serviceAccount.json

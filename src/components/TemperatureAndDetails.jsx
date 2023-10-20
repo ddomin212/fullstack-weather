@@ -49,13 +49,24 @@ function TemperatureAndDetails({
    */
   return (
     <div>
-      <div className="flex items-center justify-center py-6 text-xl text-cyan-300">
+      <div
+        data-testid="weather-main"
+        className="flex items-center justify-center py-6 text-xl text-cyan-300"
+      >
         <p>{weather_main}</p>
       </div>
 
       <div className="flex flex-row items-center justify-between text-white py-3">
-        <img src={iconUrlFromCode(weather_icon)} alt="" className="w-20" />
-        <p className="text-5xl">{`${temp.toFixed()}°`}</p>
+        <img
+          data-testid="weather-icon"
+          src={iconUrlFromCode(weather_icon)}
+          alt=""
+          className="w-20"
+        />
+        <p
+          data-testid="now-temp"
+          className="text-5xl"
+        >{`${temp.toFixed()}°`}</p>
         <WeatherStats
           stats={{
             wind_speed,

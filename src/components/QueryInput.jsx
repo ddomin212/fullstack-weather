@@ -6,6 +6,7 @@ function QueryInput({ city, setCity, handleSearchClick, handleLocationClick }) {
     <div className="flex flex-row w-3/4 items-center justify-center space-x-2">
       <input
         value={city}
+        data-testid="search-input"
         onChange={(e) => setCity(e.currentTarget.value)}
         type="text"
         placeholder="Search for city...."
@@ -13,11 +14,13 @@ function QueryInput({ city, setCity, handleSearchClick, handleLocationClick }) {
       />
       <UilSearch
         size={25}
+        data-testid="search-button"
         className="text-white cursor-pointer transition ease-out hover:scale-125"
         onClick={handleSearchClick}
       />
       <UilLocationPoint
         size={25}
+        data-testid="location-button"
         className="text-white cursor-pointer transition ease-out hover:scale-125"
         onClick={handleLocationClick}
       />

@@ -3,6 +3,9 @@ import { toast } from "react-toastify";
 import SignInButton from "./SignInButton";
 import QueryInput from "./QueryInput";
 import UnitsInput from "./UnitsInput";
+import { auth, provider } from "../services/firebaseService";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { signOutUser, signInUser } from "../services/authService";
 
 /**
  * Renders an inputs component.
@@ -18,12 +21,33 @@ function Inputs({ setQuery, units, setUnits, setUserData, userData }) {
   const [city, setCity] = useState("");
 
   /**
+   * Handles the sign-in process when the user clicks the sign-in button.
+   * @param {Object} options - The options object.
+   * @param {Function} options.setUserData - The function to set the user data in state variables.
+   */
+  const handleSignIn = useCallback(() => {
+    signInWithPopup(auth, provider).then((result) =>
+      signInUser({ result, setUserData })
+    );
+  }, [userData]);
+
+  /**
+   * Handles the sign-out process when the user clicks the sign-out button.
+   * @param {Object} options - The options object.
+   * @param {Function} options.setUserData - The function to set the user data in state variables.
+   */
+  const handleSignOut = useCallback(() => {
+    signOut(auth).then(() => {
+      signOutUser({ setUserData });
+    });
+  }, [userData]);
+
+  /**
    * Handles a change in the selected units.
    * @param {Object} e - The event object.
    */
   const handleUnitsChange = useCallback(
-    (e) => {
-      const selectedUnit = e.currentTarget.name;
+    (selectedUnit) => {
       if (units !== selectedUnit) setUnits(selectedUnit);
     },
     [units]
@@ -70,7 +94,11 @@ function Inputs({ setQuery, units, setUnits, setUserData, userData }) {
 
       <UnitsInput handleUnitsChange={handleUnitsChange} />
 
-      <SignInButton setUserData={setUserData} userData={userData} />
+      <SignInButton
+        handleSignIn={handleSignIn}
+        handleSignOut={handleSignOut}
+        userData={userData}
+      />
     </div>
   );
 }

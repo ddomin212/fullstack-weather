@@ -100,4 +100,4 @@ const refreshUserToken = ({ setUserData }) =>
     }
   });
 
-export { signInUser, signOutUser, refreshUserToken };
+export { signInUser, signOutUser, refreshUserToken, authRequest };

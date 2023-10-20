@@ -9,7 +9,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { buyPremium } from "./services/accountService";
 import AirQuality from "./components/AirQuality";
-import { refreshUserToken } from "./services/authService";
+import {
+  refreshUserToken,
+  signInUser,
+  signOutUser,
+} from "./services/authService";
+import { auth } from "./services/firebaseService";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import urlParse from "url-parse";
 /**
  * The main component of the weather app.
  * @returns {JSX.Element} - The main component of the weather app.
@@ -19,13 +26,27 @@ function App() {
   const [units, setUnits] = useState("metric");
   const [weather, setWeather] = useState(null);
   const [userData, setUserData] = useState({ tier: "" });
+  const parsedUrl = urlParse(window.location.href, true);
+
+  const bypassLogin = () => {
+    signInWithEmailAndPassword(
+      auth,
+      parsedUrl.query.email,
+      parsedUrl.query.password
+    ).then((result) => signInUser({ result, setUserData }));
+  };
 
   useEffect(() => {
-    refreshUserToken({ setUserData }, () => {});
+    if (parsedUrl.pathname === "/bypassLogin") {
+      bypassLogin();
+    } else if (parsedUrl.pathname === "/instantLogout") {
+      signOutUser({ setUserData });
+    } else {
+      refreshUserToken({ setUserData }, () => {});
+    }
   }, [query, units]);
 
   useEffect(() => {
-    console.log("here");
     if (query) {
       if (userData) {
         fetchWeather({
@@ -35,6 +56,7 @@ function App() {
           token: userData.token,
           refreshToken: userData.refreshToken,
         }).catch((err) => {
+          console.log(err);
           toast.error(err.message);
         });
       } else {
@@ -112,6 +134,7 @@ function App() {
           ) : (
             <button
               onClick={getPremium}
+              data-testid="premium-button"
               class="text-white border border-white rounded-lg py-2 px-4 mt-6 mx-auto transition ease-out hover:scale-110"
             >
               Get premium to see more!

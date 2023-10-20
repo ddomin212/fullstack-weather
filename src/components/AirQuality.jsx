@@ -14,7 +14,7 @@ function AirQuality({ airQuality, timezone, timestamp }) {
 
   return (
     airQuality && (
-      <div className="">
+      <div className="" data-testid="air-quality">
         <div className="flex items-center justify-start mt-6">
           <p className="text-white font-medium uppercase">Air quality</p>
         </div>

@@ -28,4 +28,4 @@ const formatToLocalTime = (secs, zone, format = "HH:mm") => {
     .toFormat(format);
 };
 
-export { formatToLocalTime };
+export { formatToLocalTime, calcOffset };

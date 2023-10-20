@@ -12,8 +12,10 @@ import { UilSun, UilSunset } from "@iconscout/react-unicons";
 function SunStat({ icon, label, value }) {
   const iconComponents = useMemo(
     () => ({
-      sunrise: <UilSun className="hidden sm:flex" />,
-      sunset: <UilSunset className="hidden sm:flex" />,
+      sunrise: <UilSun className="hidden sm:flex" data-testid="sunrise-icon" />,
+      sunset: (
+        <UilSunset className="hidden sm:flex" data-testid="sunset-icon" />
+      ),
     }),
     []
   );
@@ -25,7 +27,7 @@ function SunStat({ icon, label, value }) {
   return (
     <>
       {iconComponents[icon]}
-      <p className="font-light">
+      <p data-testid="sun-stat" className="font-light">
         {label}: <span className="font-medium md:ml-1">{value}</span>
       </p>
     </>

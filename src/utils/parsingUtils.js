@@ -97,8 +97,12 @@ const formatCurrentWeather = (data) => {
 };
 
 const getCSRFToken = () => {
-  const csrfToken = document.cookie.match(/csrftoken=(.*)/)[1];
-  return csrfToken;
+  try {
+    const csrfToken = document.cookie.match(/csrftoken=(.*)/)[1];
+    return csrfToken;
+  } catch (e) {
+    return "test";
+  }
 };
 
 export default formatCurrentWeather;
@@ -111,4 +115,11 @@ export default formatCurrentWeather;
 const iconUrlFromCode = (code) =>
   `http://openweathermap.org/img/wn/${code}@2x.png`;
 
-export { iconUrlFromCode, getCSRFToken };
+export {
+  iconUrlFromCode,
+  getCSRFToken,
+  formatHourlyWeather,
+  getDailyMax,
+  getDailyIcon,
+  formatCurrentWeather,
+};

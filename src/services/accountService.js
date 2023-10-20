@@ -18,7 +18,6 @@ const buyPremium = ({ userData }) => {
       }
     })
     .then((data) => {
-      console.log(data);
       if (data.status_code === 200) {
         window.location.href = data.url;
       }
