@@ -1,11 +1,20 @@
 from config.firebase import auth, db
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi.responses import JSONResponse
 from fastapi_csrf_protect import CsrfProtect
 from models.security import AuthToken
 from requests.exceptions import HTTPError
 from utils.errors import handle_exception, handle_pyrebase
 
 router = APIRouter()
+
+
+@router.get("/csrftoken")
+async def get_csrf_token(csrf_protect: CsrfProtect = Depends()):
+    csrf_token, signed_token = csrf_protect.generate_csrf_tokens()
+    response = JSONResponse({"detail": "CSRF cookie set", "csrf": csrf_token})
+    csrf_protect.set_csrf_cookie(signed_token, response)
+    return response
 
 
 @handle_exception
@@ -84,12 +93,15 @@ async def refresh(
     # Refresh token
     try:
         # Get new token
+        # if authToken.token == request.cookies["token"]:
         user = auth.refresh(authToken.refreshToken)
         response.set_cookie(key="token", value=user["idToken"])
 
         # Get user tier and return it
         tier = db.child("users").child(user["userId"]).get().val()["tier"]
         return {"detail": "Refresh successful", "tier": tier}
+        # else:
+        #     raise HTTPException(detail="Token is invalid", status_code=400)
     # If there is an error from Firebase (Pyrebase), handle it.
     except HTTPError as e:
         response = handle_pyrebase(e)
@@ -100,6 +112,7 @@ async def refresh(
 
 @handle_exception
 @router.get("/logout")
-async def logout():
+async def logout(response: Response):
     """logout user from firebase"""
+    response.delete_cookie(key="token")
     return {"message": "Logout successful"}

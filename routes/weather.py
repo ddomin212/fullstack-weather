@@ -54,7 +54,7 @@ def call_api(query: str, tier: str = "free") -> dict:
 
 
 @handle_exception
-@router.post("/weather/city", dependencies=[Depends(RateLimiter(times=5, seconds=60))])
+@router.post("/weather/city", dependencies=[Depends(RateLimiter(times=30, seconds=60))])
 async def weather_by_city(authToken: AuthToken, city: str, units: str = "metric"):
     """Get weather data for a city
 
@@ -85,7 +85,7 @@ async def weather_by_city(authToken: AuthToken, city: str, units: str = "metric"
 
 @handle_exception
 @router.post(
-    "/weather/coordinates", dependencies=[Depends(RateLimiter(times=5, seconds=60))]
+    "/weather/coordinates", dependencies=[Depends(RateLimiter(times=30, seconds=60))]
 )
 async def weather_by_coordinates(
     authToken: AuthToken, lat: float, lon: float, units: str = "metric"

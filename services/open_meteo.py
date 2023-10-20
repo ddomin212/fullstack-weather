@@ -41,12 +41,14 @@ class OpenMeteoAPI:
         session = requests_cache.CachedSession(
             "demo_cache", expire_after=cache_expire_after
         )
-        response = session.get(url).json()
-        if "error" in response and response["error"] == True:
+        response = session.get(url)
+        data = response.json()
+        if "error" in data and data["error"] == True:
             raise HTTPException(
-                status_code=int(response["cod"]), detail=response["message"]
+                status_code=response.status_code,
+                detail="Could not fetch data from OpenMeteo API",
             )
-        return response
+        return data
 
     def get_air_quality(self, query_params: dict[str, float | str]) -> AirQuality:
         """Get the air quality for a location (latitude, longitude)

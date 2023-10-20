@@ -10,6 +10,9 @@ from fastapi_csrf_protect import CsrfProtect
 from fastapi_csrf_protect.exceptions import CsrfProtectError
 from fastapi_limiter import FastAPILimiter
 from models.security import CsrfSettings
+from routes.auth import router as auth_router
+from routes.payment import router as payment_router
+from routes.weather import router as weather_router
 
 
 def initialize_middleware(app: FastAPI) -> None:
@@ -48,15 +51,13 @@ def initialize_middleware(app: FastAPI) -> None:
         await FastAPILimiter.init(redis)
 
 
-def initialize_app() -> FastAPI:
+def initialize_app(app: FastAPI) -> None:
     """Initialize the FastAPI application with various middleware and settings."""
 
     # Initialize Sentry logging and monitoring
     sentry_sdk.init(
         dsn=os.getenv("SENTRY_DSN"),
     )
-
-    app = FastAPI()
 
     # Capture HTTP errors and send them to Sentry
     @app.exception_handler(HTTPException)
@@ -71,10 +72,12 @@ def initialize_app() -> FastAPI:
     @app.exception_handler(CsrfProtectError)
     def csrf_protect_exception_handler(request: Request, exc: CsrfProtectError):
         sentry_sdk.capture_exception(exc)
-        return JSONResponse(
-            status_code=exc.status_code, content={"detail": exc.message}
-        )
+        return JSONResponse(status_code=419, content={"detail": exc.message})
 
     initialize_middleware(app)
+
+    app.include_router(weather_router)
+    app.include_router(auth_router)
+    app.include_router(payment_router)
 
     return app

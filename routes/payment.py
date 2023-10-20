@@ -97,3 +97,5 @@ async def payment_success(session_id: str, guid: str):
         )
     except KeyError:
         raise HTTPException(detail="Verification token not found", status_code=400)
+    except TypeError:
+        raise HTTPException(detail="Verification token not found", status_code=400)

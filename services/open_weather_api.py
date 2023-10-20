@@ -3,10 +3,13 @@ from dataclasses import dataclass
 
 import requests
 import requests_cache
+from dotenv import load_dotenv
 from fastapi import HTTPException
 from models.weather import CurrentWeather, Forecast
 from utils.parsers.open_weather import OpenWeatherParser
 from utils.services import parse_query
+
+load_dotenv()
 
 
 @dataclass
