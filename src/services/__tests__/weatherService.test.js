@@ -17,7 +17,7 @@ describe("getWeatherData", () => {
     });
 
     const headers = new Headers();
-    headers.append("Host", "hostname");
+    headers.append("Host", process.env.REACT_APP_SECRET_HOST_HEADER);
     headers.append("X-CSRF-Token", "test");
     headers.append("Content-Type", "application/json");
 

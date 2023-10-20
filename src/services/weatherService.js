@@ -13,7 +13,7 @@ const getWeatherData = (infoType, searchParams, token, refreshToken) => {
   url.query = { ...searchParams };
 
   const headers = new Headers();
-  headers.append("Host", "hostname");
+  headers.append("Host", process.env.REACT_APP_SECRET_HOST_HEADER);
   headers.append("X-CSRF-Token", getCSRFToken());
   headers.append("Content-Type", "application/json");
 
