@@ -31,6 +31,22 @@ This is a simple weather application built with FastAPI and React.
    npm start --host 0.0.0.0
    ```
 
+## Documentation
+
+### JSDoc
+
+We use JSDoc for documenting our JavaScript code. You can find it [here](https://ddomin212.github.io/fullstack-weather/frontend/out/index.html)
+
+### Test Coverage
+
+We use Jest and Pytest for testing and coverage reports. Links can be found [here](https://ddomin212.github.io/fullstack-weather/backend/cov) and [here](https://ddomin212.github.io/fullstack-weather/frontend/coverage/lcov-report/index.html)
+
+### Linter Reports
+
+We use ESLint for linting our JavaScript code. To view the linter report head [here](https://ddomin212.github.io/fullstack-weather/frontend/reports/report.html)
+
+This will lint your code and output any issues to the console.
+
 ## Usage
 
 1. Open the app in your browser at `http://localhost:3000`
