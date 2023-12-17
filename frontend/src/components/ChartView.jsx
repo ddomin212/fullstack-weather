@@ -72,7 +72,7 @@ function WeatherChart({ items, daily, yearly, units }) {
     } else if (timeInterval === "daily") {
       chartValues = daily;
     } else {
-      chartValues = items.slice(0, Number(timeInterval));
+      chartValues = items?.slice(0, Number(timeInterval));
     }
 
     setXYValuesCallback({

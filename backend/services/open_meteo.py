@@ -1,3 +1,5 @@
+# pylint: disable=E0401
+
 from dataclasses import dataclass
 
 import requests
@@ -43,11 +45,13 @@ class OpenMeteoAPI:
         )
         response = session.get(url)
         data = response.json()
+        print(data)
         if "error" in data and data["error"] == True:
             raise HTTPException(
                 status_code=response.status_code,
                 detail="Could not fetch data from OpenMeteo API",
             )
+            
         return data
 
     def get_air_quality(self, query_params: dict[str, float | str]) -> AirQuality:
@@ -91,7 +95,7 @@ class OpenMeteoAPI:
         units = units_appendix(query_params.pop("units"))
         response = self.get_api_response(
             "climate",
-            f"start_date={start}&end_date={end}&models=EC_Earth3P_HR&daily=temperature_2m_mean,windspeed_10m_mean,relative_humidity_2m_mean,precipitation_sum,cloudcover_mean,pressure_msl_mean",
+            f"start_date={start}&end_date={end}&models=EC_Earth3P_HR&daily=temperature_2m_mean,windspeed_10m_mean,relative_humidity_2m_mean,precipitation_sum,cloud_cover_mean,pressure_msl_mean",
             query_params,
             units,
         )

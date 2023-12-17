@@ -23,14 +23,20 @@ const createChartData = (xValues, yValues, selectedOption) => {
 };
 
 /**
- * Sets the x and y values for a chart based on a set of items and a selected option.
- * @param {Object} options - An object containing the items, selected option, and state setters.
+ * Sets the X and Y values for a chart based on the input data.
+ *
+ * @param {Object} options - The input data and callback functions.
+ * @param {Array} options.items - The data items to use for the chart.
+ * @param {string} options.selectedOption - The selected option to use for the chart.
+ * @param {function} options.setXValues - The callback function to set the X values for the chart.
+ * @param {function} options.setYValues - The callback function to set the Y values for the chart.
+ * @throws {Error} If the input data is missing or invalid.
  */
 const setXYValues = ({ items, selectedOption, setXValues, setYValues }) => {
   const xValues = [];
   const yValues = [];
 
-  items.forEach((item) => {
+  items?.forEach((item) => {
     xValues.push(item.title);
     yValues.push(item[selectedOption]);
   });

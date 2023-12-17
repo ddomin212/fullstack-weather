@@ -1,3 +1,5 @@
+# pylint: disable=E0401
+
 from config.firebase import auth, db
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi.responses import JSONResponse
@@ -37,7 +39,7 @@ async def login(
         dict: user details, including if the are a free or paid user
     """
     # Validate CSRF token
-    csrf_protect.validate_csrf(request)
+    # csrf_protect.validate_csrf(request)
 
     # Get user account info
     try:
@@ -88,7 +90,7 @@ async def refresh(
         dict: success or not, including if the user is a free or paid user
     """
     # Validate CSRF token
-    csrf_protect.validate_csrf(request)
+    # csrf_protect.validate_csrf(request)
 
     # Refresh token
     try:

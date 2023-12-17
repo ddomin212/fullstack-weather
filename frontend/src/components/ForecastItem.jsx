@@ -1,6 +1,16 @@
 import React from "react";
 import { iconUrlFromCode } from "../utils/parsingUtils";
-
+/**
+ * Renders a single item in the forecast list.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.item - The forecast item to render.
+ * @param {string} props.item.title - The title of the forecast item.
+ * @param {string} props.item.icon - The code for the weather icon.
+ * @param {number} props.item.temp - The temperature in degrees Celsius.
+ * @param {number} props.index - The index of the item in the list.
+ * @returns {JSX.Element} - The rendered component.
+ */
 function ForecastItem({ item, index }) {
   return (
     <div

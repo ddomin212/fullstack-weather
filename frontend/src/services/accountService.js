@@ -1,8 +1,14 @@
 import { getCSRFToken } from "../utils/parsingUtils";
+import { BACKEND_URL } from "../utils/settings";
 
+/**
+ * Sends a payment request to the server to buy a premium account for the user.
+ * @param {Object} userData - The user data object containing the user's token.
+ * @throws {Error} If the payment request fails or the response status is not 200.
+ */
 const buyPremium = ({ userData }) => {
-  const token = userData?.token;
-  fetch("http://0.0.0.0:8000/payment", {
+  const token = userData.token;
+  fetch(BACKEND_URL + "/payment", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

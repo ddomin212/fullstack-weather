@@ -1,3 +1,5 @@
+# pylint: disable=E0401
+
 import re
 
 from fastapi import HTTPException

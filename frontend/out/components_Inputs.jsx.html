@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Inputs.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Inputs.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useCallback } from "react";
+import { toast } from "react-toastify";
+import SignInButton from "./SignInButton";
+import QueryInput from "./QueryInput";
+import UnitsInput from "./UnitsInput";
+import { auth, provider } from "../services/firebaseService";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { signOutUser, signInUser } from "../services/authService";
+
+/**
+ * Renders an inputs component.
+ * @param {Object} props - The component props.
+ * @param {Function} props.setQuery - The function to call when the query changes.
+ * @param {string} props.units - The units to use for the weather data.
+ * @param {Function} props.setUnits - The function to call when the units change.
+ * @param {Function} props.setUserData - The function to call when the logged in state changes.
+ * @param {string} props.userData - The user data.
+ * @returns {JSX.Element} - The rendered inputs component.
+ */
+function Inputs({ setQuery, units, setUnits, setUserData, userData }) {
+  const [city, setCity] = useState("");
+
+  /**
+   * Handles the sign-in process when the user clicks the sign-in button.
+   * @param {Object} options - The options object.
+   * @param {Function} options.setUserData - The function to set the user data in state variables.
+   */
+  const handleSignIn = useCallback(() => {
+    signInWithPopup(auth, provider).then((result) =>
+      signInUser({ result, setUserData })
+    );
+  }, [userData]);
+
+  /**
+   * Handles the sign-out process when the user clicks the sign-out button.
+   * @param {Object} options - The options object.
+   * @param {Function} options.setUserData - The function to set the user data in state variables.
+   */
+  const handleSignOut = useCallback(() => {
+    signOut(auth).then(() => {
+      signOutUser({ setUserData });
+    });
+  }, [userData]);
+
+  /**
+   * Handles a change in the selected units.
+   * @param {Object} e - The event object.
+   */
+  const handleUnitsChange = useCallback(
+    (selectedUnit) => {
+      if (units !== selectedUnit) setUnits(selectedUnit);
+    },
+    [units]
+  );
+
+  /**
+   * Handles a click on the search button.
+   */
+  const handleSearchClick = useCallback(() => {
+    if (city !== "") setQuery({ city });
+  }, [city]);
+
+  /**
+   * Handles a click on the location button.
+   */
+  const handleLocationClick = useCallback(() => {
+    if (navigator.geolocation) {
+      toast.info("Fetching users location.");
+      navigator.geolocation.getCurrentPosition((position) => {
+        toast.success("Location fetched!");
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+
+        setQuery({
+          lat,
+          lon,
+        });
+      });
+    }
+  }, [setQuery]);
+
+  /**
+   * Renders the inputs component.
+   * @returns {JSX.Element} - The rendered inputs component.
+   */
+  return (
+    &lt;div className="flex flex-row justify-center my-6">
+      &lt;QueryInput
+        city={city}
+        setCity={setCity}
+        handleLocationClick={handleLocationClick}
+        handleSearchClick={handleSearchClick}
+      />
+
+      &lt;UnitsInput handleUnitsChange={handleUnitsChange} />
+
+      &lt;SignInButton
+        handleSignIn={handleSignIn}
+        handleSignOut={handleSignOut}
+        userData={userData}
+      />
+    &lt;/div>
+  );
+}
+
+export default Inputs;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SignInButton.html">SignInButton</a></li><li><a href="module-authService.html">authService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AirQuality">AirQuality</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Forecast">Forecast</a></li><li><a href="global.html#ForecastItem">ForecastItem</a></li><li><a href="global.html#Inputs">Inputs</a></li><li><a href="global.html#QueryInput">QueryInput</a></li><li><a href="global.html#SelectItem">SelectItem</a></li><li><a href="global.html#SelectOptions">SelectOptions</a></li><li><a href="global.html#SunStat">SunStat</a></li><li><a href="global.html#SunStats">SunStats</a></li><li><a href="global.html#TemperatureAndDetails">TemperatureAndDetails</a></li><li><a href="global.html#TimeAndLocation">TimeAndLocation</a></li><li><a href="global.html#WeatherChart">WeatherChart</a></li><li><a href="global.html#WeatherInfo">WeatherInfo</a></li><li><a href="global.html#WeatherStats">WeatherStats</a></li><li><a href="global.html#buyPremium">buyPremium</a></li><li><a href="global.html#calcOffset">calcOffset</a></li><li><a href="global.html#createChartData">createChartData</a></li><li><a href="global.html#fetchWeather">fetchWeather</a></li><li><a href="global.html#formatCurrentWeather">formatCurrentWeather</a></li><li><a href="global.html#formatHourlyWeather">formatHourlyWeather</a></li><li><a href="global.html#formatToLocalTime">formatToLocalTime</a></li><li><a href="global.html#getDailyMax">getDailyMax</a></li><li><a href="global.html#getFormattedWeatherData">getFormattedWeatherData</a></li><li><a href="global.html#getWeatherData">getWeatherData</a></li><li><a href="global.html#iconUrlFromCode">iconUrlFromCode</a></li><li><a href="global.html#setXYValues">setXYValues</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 17 2023 11:07:02 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -51,4 +51,15 @@ describe("ChartView", () => {
       expect(chartData.labels).toEqual(null);
     });
   });
+
+  it("graceful when undefined", async () => {
+    const { getByText } = render(
+      <ChartView
+        items={undefined}
+        daily={undefined}
+        yearly={undefined}
+        units={undefined}
+      />
+    );
+  });
 });

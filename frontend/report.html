@@ -1,0 +1,1636 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ESLint Results</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style type="text/css">
+    body {
+      margin: 0;
+    }
+  
+    .eslint-report {
+      font-family: "Helvetica Neue", sans-serif;
+      font-size: 14px;
+      padding: 20px 40px;
+    }
+  
+    .eslint-report h1 {
+      border-bottom: 1px solid #ddd;
+      line-height: 1;
+      padding-bottom: 12px;
+    }
+  
+    .eslint-report h2 {
+      padding-bottom: 9px;
+      line-height: 1;
+      margin-top: 24px;
+      margin-bottom: 9px;
+    }
+  
+    .eslint-report h3 {
+      line-height: 1;
+      margin-top: 0;
+    }
+  
+    .eslint-report a {
+      text-decoration: none;
+    }
+  
+    .eslint-report table {
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+  
+    .toggle-all-link {
+      font-size: 14px;
+    }
+  
+    .report-table {
+      font-size: 14px;
+      min-width: 800px;
+      border: 1px solid #e6e6e6;
+      margin: 10px;
+    }
+  
+    .report-table thead {
+      background-color: #eee;
+    }
+  
+    .report-table th {
+      text-align: left;
+      vertical-align: middle;
+    }
+  
+    .report-table th,
+    .report-table td {
+      padding: 4px 9px;
+      border: 1px solid #ccc;
+    }
+  
+    .report-table td {
+      line-height: 1.5;
+      vertical-align: top;
+    }
+  
+    .report-table .error-col {
+      width: 41px;
+    }
+  
+    .report-table .warning-col {
+      width: 63px;
+    }
+  
+    .report-table .toggle-link {
+      display: block;
+    }
+  
+    .report-table .danger td {
+      background-color: rgba(242, 222, 222, 0.8);
+    }
+  
+    .report-table .danger:hover td {
+      background-color: rgba(242, 222, 222, 1);
+    }
+  
+    .report-table .warning td {
+      background-color: rgba(252, 248, 227, 0.8);
+    }
+  
+    .report-table .warning:hover td {
+      background-color: rgba(252, 248, 227, 1);
+    }
+  
+    .report-table .success td {
+      background-color: rgba(223, 240, 216, 0.8);
+    }
+  
+    .report-table .success:hover td {
+      background-color: rgba(223, 240, 216, 1);
+    }
+  
+    .table-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      width: 600px;
+      align-items: flex-end;
+    }
+  
+    .table-wrapper.occurrences {
+      align-items: flex-start;
+    }
+  
+    .table-wrapper.occurrences .table-column {
+      height: 180px;
+      overflow-y: auto;
+    }
+  
+    .table-column {
+      flex: 1;
+      margin: 10px;
+    }
+  
+    .summary-table {
+      width: 100%;
+    }
+  
+    .summary-table a {
+      display: block;
+    }
+  
+    .summary-table td {
+      padding: 4px 0;
+    }
+  
+    .summary-table td:last-child {
+      text-align: right;
+    }
+  
+    .summary-table tfoot td {
+      border-top: 2px solid #666;
+      font-weight: bold;
+    }
+  
+    .details-row.hidden {
+      display: none;
+    }
+  
+    .details-table {
+      font-size: 12px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  
+    .details-table td {
+      border: 0;
+      padding: 1px 6px;
+    }
+  
+    .details-table td:first-child {
+      padding-left: 0;
+    }
+  
+    .details-table .location-col {
+      width: 25px;
+    }
+  
+    .details-table .rule-col {
+      white-space: nowrap;
+      width: 100px;
+    }
+  
+    .details-table .rule-col a {
+      display: block;
+    }
+  
+    .details-table .rule-col a:hover {
+      text-decoration: underline;
+    }
+  
+    .details-table .severity-col {
+      width: 45px;
+    }
+  
+    .details-table .msg-danger .severity-col {
+      color: #900;
+    }
+  
+    .details-table .msg-warning .severity-col {
+      color: #f90;
+    }
+  </style>
+
+    <script>
+      // yolo
+      function toggleAllDetails(node) {
+        var rows = document.querySelectorAll("tr.details-row");
+    
+        if (node.innerHTML === "(expand all)") {
+          node.innerHTML = "(collapse all)";
+    
+          for (var x = 0; x < rows.length; x++) {
+            var row = rows[x];
+            row.className = "details-row";
+          }
+        } else {
+          node.innerHTML = "(expand all)";
+    
+          for (var x = 0; x < rows.length; x++) {
+            var row = rows[x];
+            row.className = "details-row hidden";
+          }
+        }
+      }
+    
+      function toggleDetails(node) {
+        var parentRow = node.parentNode.parentNode;
+        var detailsRow = parentRow.nextSibling;
+    
+        if (detailsRow.className === "details-row hidden") {
+          detailsRow.className = "details-row";
+        } else {
+          detailsRow.className = "details-row hidden";
+        }
+      }
+    </script>
+</head>
+<body>
+  <div class="eslint-report">
+    <h1>ESLint Results</h1>
+
+      <h2>Summary</h2>
+      
+      <div class="table-wrapper">
+        <div class="table-column">
+          <table class="summary-table">
+              <tbody>
+                <tr>
+                  <td>Errors</td>
+                  <td>106</td>
+                </tr>
+                <tr>
+                  <td>Warnings</td>
+                  <td>57</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total alerts</td>
+                  <td>163</td>
+                </tr>
+              </tfoot>
+          </table>
+        </div>
+        <div class="table-column">
+          <table class="summary-table">
+              <tbody>
+                <tr>
+                  <td>Files with errors</td>
+                  <td>17</td>
+                </tr>
+                <tr>
+                  <td>Files with only warnings</td>
+                  <td>6</td>
+                </tr>
+                <tr>
+                  <td>Clean files</td>
+                  <td>37</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total files linted</td>
+                  <td>60</td>
+                </tr>
+              </tfoot>
+          </table>
+        </div>
+      </div>
+
+        <h2>Most-Common Errors and Warnings</h2>
+        
+        <div class="table-wrapper occurrences">
+          <div class="table-column">
+            <h3>Errors</h3>
+        
+              <table class="summary-table">
+                <tbody>
+                    <tr class="occurrence row-0">
+                        <td><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+                      <td>49</td>
+                    </tr>
+                    <tr class="occurrence row-1">
+                        <td><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+                      <td>25</td>
+                    </tr>
+                    <tr class="occurrence row-2">
+                        <td><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+                      <td>21</td>
+                    </tr>
+                    <tr class="occurrence row-3">
+                        <td><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+                      <td>7</td>
+                    </tr>
+                    <tr class="occurrence row-4">
+                        <td><a href="http://eslint.org/docs/rules/jest/no-identical-title">jest/no-identical-title</a></td>
+                      <td>2</td>
+                    </tr>
+                    <tr class="occurrence row-5">
+                        <td><a href="http://eslint.org/docs/rules/testing-library/no-wait-for-multiple-assertions">testing-library/no-wait-for-multiple-assertions</a></td>
+                      <td>1</td>
+                    </tr>
+                    <tr class="occurrence row-6">
+                        <td><a href="http://eslint.org/docs/rules/jest/no-conditional-expect">jest/no-conditional-expect</a></td>
+                      <td>1</td>
+                    </tr>
+                </tbody>
+              </table>
+          </div>
+          <div class="table-column">
+            <h3>Warnings</h3>
+        
+              <table class="summary-table">
+                <tbody>
+                    <tr class="occurrence row-0">
+                        <td><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+                      <td>18</td>
+                    </tr>
+                    <tr class="occurrence row-1">
+                        <td><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+                      <td>13</td>
+                    </tr>
+                    <tr class="occurrence row-2">
+                        <td><a href="http://eslint.org/docs/rules/react-hooks/exhaustive-deps">react-hooks/exhaustive-deps</a></td>
+                      <td>5</td>
+                    </tr>
+                    <tr class="occurrence row-3">
+                        <td><a href="http://eslint.org/docs/rules/no-useless-escape">no-useless-escape</a></td>
+                      <td>4</td>
+                    </tr>
+                    <tr class="occurrence row-4">
+                        <td><a href="http://eslint.org/docs/rules/no-mixed-operators">no-mixed-operators</a></td>
+                      <td>4</td>
+                    </tr>
+                    <tr class="occurrence row-5">
+                        <td><a href="http://eslint.org/docs/rules/no-unused-vars">no-unused-vars</a></td>
+                      <td>4</td>
+                    </tr>
+                    <tr class="occurrence row-6">
+                        <td><a href="http://eslint.org/docs/rules/no-cond-assign">no-cond-assign</a></td>
+                      <td>3</td>
+                    </tr>
+                    <tr class="occurrence row-7">
+                        <td><a href="http://eslint.org/docs/rules/default-case">default-case</a></td>
+                      <td>2</td>
+                    </tr>
+                    <tr class="occurrence row-8">
+                        <td><a href="http://eslint.org/docs/rules/array-callback-return">array-callback-return</a></td>
+                      <td>2</td>
+                    </tr>
+                    <tr class="occurrence row-9">
+                        <td><a href="http://eslint.org/docs/rules/new-parens">new-parens</a></td>
+                      <td>1</td>
+                    </tr>
+                    <tr class="occurrence row-10">
+                        <td><a href="http://eslint.org/docs/rules/import/no-anonymous-default-export">import/no-anonymous-default-export</a></td>
+                      <td>1</td>
+                    </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+
+      <h2>File Breakdown
+          <a id="toggle" href="javascript:;" onclick="toggleAllDetails(this)" class="toggle-all-link">(expand all)</a></h2>
+      
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th class="error-col">Errors</th>
+            <th class="warning-col">Warnings</th>
+          </tr>
+        </thead>
+        <tbody><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/WeatherStats.test.js</a></td>
+              <td>24</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              23:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              23:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              24:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              24:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              25:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              25:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              26:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              26:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              27:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              27:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              28:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              28:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              29:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              29:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              30:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              30:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              31:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              31:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              32:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              32:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              33:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              33:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              34:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              34:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/out/scripts/prettify/prettify.js</a></td>
+              <td>21</td>
+              <td>42</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              2:107
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Expected a conditional expression and instead saw an assignment.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-cond-assign">no-cond-assign</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              2:505
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;a&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              3:103
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;j&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              3:112
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              3:169
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              3:396
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              3:402
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              4:14
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              4:20
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              4:442
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              4:448
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              5:134
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              5:140
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              6:36
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;p&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              6:40
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;d&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              6:199
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Expected a default case.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/default-case">default-case</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              6:335
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              6:344
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              6:362
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected mix of &#x27;&lt;&lt;&#x27; and &#x27;|&#x27;. Use parentheses to clarify the intended order of operations.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-mixed-operators">no-mixed-operators</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              6:365
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected mix of &#x27;&lt;&lt;&#x27; and &#x27;|&#x27;. Use parentheses to clarify the intended order of operations.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-mixed-operators">no-mixed-operators</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              6:391
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              6:404
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              7:6
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected mix of &#x27;&lt;&lt;&#x27; and &#x27;|&#x27;. Use parentheses to clarify the intended order of operations.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-mixed-operators">no-mixed-operators</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              7:9
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected mix of &#x27;&lt;&lt;&#x27; and &#x27;|&#x27;. Use parentheses to clarify the intended order of operations.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-mixed-operators">no-mixed-operators</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              7:317
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              8:46
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              8:61
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              8:99
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              8:220
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              8:224
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              8:306
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              9:116
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              10:182
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              11:10
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              12:433
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Expected a default case.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/default-case">default-case</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              12:509
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              12:513
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              13:415
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;f&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              13:475
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              13:490
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              14:39
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              14:58
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;a&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              15:86
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;g&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              15:109
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              15:115
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unexpected use of comma operator.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-sequences">no-sequences</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              16:101
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;m&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              16:126
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;e&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              16:147
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;h&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              16:168
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;a&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              16:202
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              16:397
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;b&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              17:126
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              19:272
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;w&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              20:176
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;v&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              21:172
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unnecessary escape character: \!.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-useless-escape">no-useless-escape</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              21:189
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unnecessary escape character: \&gt;.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-useless-escape">no-useless-escape</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              25:480
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;k&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              25:500
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Expected a conditional expression and instead saw an assignment.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-cond-assign">no-cond-assign</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              26:76
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;o&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              26:370
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expected an assignment or function call and instead saw an expression.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-expressions">no-unused-expressions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              26:378
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Expected a conditional expression and instead saw an assignment.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-cond-assign">no-cond-assign</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              27:215
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;e&#x27; is already defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              27:259
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Missing &#x27;()&#x27; invoking a constructor.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/new-parens">new-parens</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/ChartView.test.js</a></td>
+              <td>9</td>
+              <td>1</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              42:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              42:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              43:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              43:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              44:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              44:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              45:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              45:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              51:7
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid using multiple assertions within &#x60;waitFor&#x60; callback</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/no-wait-for-multiple-assertions">testing-library/no-wait-for-multiple-assertions</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              56:13
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;getByText&#x27; is assigned a value but never used.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-vars">no-unused-vars</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/SelectOption.test.js</a></td>
+              <td>9</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              39:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              40:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              41:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              42:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              43:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              44:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              45:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              46:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              47:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/out/scripts/prettify/lang-css.js</a></td>
+              <td>6</td>
+              <td>2</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              1:1
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">&#x27;PR&#x27; is not defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              1:24
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">&#x27;PR&#x27; is not defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              2:7
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unnecessary escape character: \!.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-useless-escape">no-useless-escape</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              2:14
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Unnecessary escape character: \&gt;.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-useless-escape">no-useless-escape</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              2:184
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">&#x27;PR&#x27; is not defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              2:207
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">&#x27;PR&#x27; is not defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              2:309
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">&#x27;PR&#x27; is not defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              2:332
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">&#x27;PR&#x27; is not defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/TemperatureAndDetails.test.js</a></td>
+              <td>5</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              33:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              33:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              34:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              34:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              35:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByAltText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/WeatherInfo.test.js</a></td>
+              <td>5</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              14:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              14:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              15:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              15:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              16:12
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByTestId&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/Forecast.test.js</a></td>
+              <td>4</td>
+              <td>1</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              25:13
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;getAllByText&#x27; is assigned a value but never used.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-vars">no-unused-vars</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              27:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              34:9
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid calling &#x60;expect&#x60; conditionally&#x60;</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/no-conditional-expect">jest/no-conditional-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              34:9
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              44:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/SelectItem.test.js</a></td>
+              <td>4</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              30:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              31:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              32:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              33:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/SunStats.test.js</a></td>
+              <td>4</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              28:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              29:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              30:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              31:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/ForecastItem.test.js</a></td>
+              <td>3</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              20:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              21:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              22:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/SunStat.test.js</a></td>
+              <td>3</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              17:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              18:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              19:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/TimeAndLocation.test.js</a></td>
+              <td>3</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              20:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              21:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              22:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/__tests__/AirQuality.test.js</a></td>
+              <td>2</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              27:14
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getAllByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              40:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Avoid destructuring queries from &#x60;render&#x60; result, use &#x60;screen.getByText&#x60; instead</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/testing-library/prefer-screen-queries">testing-library/prefer-screen-queries</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/utils/__tests__/parsingUtils.test.js</a></td>
+              <td>2</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              64:10
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Describe block title is used multiple times in the same describe block.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/no-identical-title">jest/no-identical-title</a></td>
+      </tr><tr class="msg-danger"><td class="location-col">
+                              209:7
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Expect must have a corresponding matcher call.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/valid-expect">jest/valid-expect</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/services/__tests__/accountService.test.js</a></td>
+              <td>1</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              33:5
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">&#x27;fetchMock&#x27; is not defined.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-undef">no-undef</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="danger"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/utils/__tests__/timeUtils.test.js</a></td>
+              <td>1</td>
+              <td>0</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-danger"><td class="location-col">
+                              22:10
+                          </td>
+                          <td class="severity-col">Error</td>
+                          <td class="message-col">Describe block title is used multiple times in the same describe block.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/jest/no-identical-title">jest/no-identical-title</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="warning"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/Inputs.jsx</a></td>
+              <td>0</td>
+              <td>4</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              32:6
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">React Hook useCallback has a missing dependency: &#x27;setUserData&#x27;. Either include it or remove the dependency array.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/react-hooks/exhaustive-deps">react-hooks/exhaustive-deps</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              43:6
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">React Hook useCallback has a missing dependency: &#x27;setUserData&#x27;. Either include it or remove the dependency array.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/react-hooks/exhaustive-deps">react-hooks/exhaustive-deps</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              53:5
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">React Hook useCallback has a missing dependency: &#x27;setUnits&#x27;. Either include it or remove the dependency array. If &#x27;setUnits&#x27; changes too often, find the parent component that defines it and wrap that definition in useCallback.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/react-hooks/exhaustive-deps">react-hooks/exhaustive-deps</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              61:6
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">React Hook useCallback has a missing dependency: &#x27;setQuery&#x27;. Either include it or remove the dependency array. If &#x27;setQuery&#x27; changes too often, find the parent component that defines it and wrap that definition in useCallback.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/react-hooks/exhaustive-deps">react-hooks/exhaustive-deps</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="warning"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/ChartView.jsx</a></td>
+              <td>0</td>
+              <td>2</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              2:19
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;ChartJS&#x27; is defined but never used.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-vars">no-unused-vars</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              84:6
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">React Hook useEffect has missing dependencies: &#x27;daily&#x27;, &#x27;items&#x27;, &#x27;setXYValuesCallback&#x27;, and &#x27;yearly&#x27;. Either include them or remove the dependency array.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/react-hooks/exhaustive-deps">react-hooks/exhaustive-deps</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="warning"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/utils/parsingUtils.js</a></td>
+              <td>0</td>
+              <td>2</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              13:20
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Array.prototype.map() expects a return value from arrow function.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/array-callback-return">array-callback-return</a></td>
+      </tr><tr class="msg-warning"><td class="location-col">
+                              58:20
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Array.prototype.map() expects a return value from arrow function.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/array-callback-return">array-callback-return</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="warning"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/out/scripts/linenumber.js</a></td>
+              <td>0</td>
+              <td>1</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              1:10
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;document&#x27; is already defined as a built-in global variable.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-redeclare">no-redeclare</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="warning"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/components/SignInButton.jsx</a></td>
+              <td>0</td>
+              <td>1</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              7:17
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">&#x27;useEffect&#x27; is defined but never used.</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/no-unused-vars">no-unused-vars</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="warning"><td>            <a class="toggle-link" href="javascript:;" onclick="toggleDetails(this)">/home/dan/Documents/weather_v2/frontend/src/services/firebaseConfig.js</a></td>
+              <td>0</td>
+              <td>1</td></tr><tr class="details-row hidden">
+                <td colspan="3">
+                  <table class="details-table">
+                    <tbody><tr class="msg-warning"><td class="location-col">
+                              1:1
+                          </td>
+                          <td class="severity-col">Warning</td>
+                          <td class="message-col">Assign object to a variable before exporting as module default</td>
+                            <td class="rule-col"><a href="http://eslint.org/docs/rules/import/no-anonymous-default-export">import/no-anonymous-default-export</a></td>
+      </tr></tbody>
+                  </table>
+                </td>
+              </tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/coverage/lcov-report/block-navigation.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/coverage/lcov-report/prettify.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/coverage/lcov-report/sorter.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/cypress/support/commands.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/cypress/support/e2e.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/postcss.config.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/public/env.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/AirQuality.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/Forecast.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/ForecastItem.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/QueryInput.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/SelectItem.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/SelectOptions.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/SunStat.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/SunStats.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/TemperatureAndDetails.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/TimeAndLocation.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/UnitsInput.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/WeatherInfo.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/WeatherStats.jsx</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/__tests__/Inputs.test.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/__tests__/QueryInput.test.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/__tests__/SignInButton.test.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/components/__tests__/UnitsInput.test.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/index.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/services/__tests__/authService.test.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/services/__tests__/weatherService.test.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/services/accountService.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/services/authService.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/services/firebaseService.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/services/weatherService.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/setupTests.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/utils/__tests__/chartUtils.test.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/utils/chartUtils.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/utils/settings.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/src/utils/timeUtils.js</td>
+              <td>0</td>
+              <td>0</td></tr><tr class="success"><td>/home/dan/Documents/weather_v2/frontend/tailwind.config.js</td>
+              <td>0</td>
+              <td>0</td></tr></tbody>
+      </table>
+
+  </div>
+</body>
+</html>

@@ -1,6 +1,15 @@
 import React from "react";
 import { UilSearch, UilLocationPoint } from "@iconscout/react-unicons";
 
+/**
+ * A component that allows the user to search for a city and get its weather information.
+ *
+ * @param {string} city - The name of the city to search for.
+ * @param {function} setCity - A function that sets the value of the city input field.
+ * @param {function} handleSearchClick - A function that is called when the search button is clicked.
+ * @param {function} handleLocationClick - A function that is called when the location button is clicked.
+ * @returns {JSX.Element} - The QueryInput component.
+ */
 function QueryInput({ city, setCity, handleSearchClick, handleLocationClick }) {
   return (
     <div className="flex flex-row w-3/4 items-center justify-center space-x-2">

@@ -2,9 +2,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Forecast from "../Forecast";
 
-describe("Forecast", () => {
-  const title = "Test Forecast";
-  const items = [
+function forecastBuilder() {
+  return [
     { title: "00:00", temp: 10, icon: "01d" },
     { title: "01:00", temp: 11, icon: "01d" },
     { title: "02:00", temp: 12, icon: "01d" },
@@ -16,6 +15,11 @@ describe("Forecast", () => {
     { title: "08:00", temp: 18, icon: "01d" },
     { title: "09:00", temp: 19, icon: "01d" },
   ];
+}
+
+describe("Forecast", () => {
+  const title = "Test Forecast";
+  const items = forecastBuilder();
 
   it("renders the component with the correct props", () => {
     const { getAllByText } = render(<Forecast title={title} items={items} />);
@@ -25,13 +29,18 @@ describe("Forecast", () => {
     const forecastItems = screen.getAllByTestId("forecast-item");
     expect(forecastItems).toHaveLength(6);
 
-    expect(screen.getAllByText("00:00")).toHaveLength(1);
-    expect(screen.getAllByText("01:00")).toHaveLength(1);
-    expect(screen.getAllByText("02:00")).toHaveLength(1);
-    expect(screen.getAllByText("03:00")).toHaveLength(1);
-    expect(screen.getAllByText("04:00")).toHaveLength(1);
-    expect(screen.getAllByText("05:00")).toHaveLength(1);
+    for (let obj of items) {
+      if (obj.temp < 16) {
+        expect(screen.getByText(obj.title));
+      }
+    }
+  });
 
-    expect(screen.queryAllByText("06:00")).toHaveLength(0);
+  it("handles errors gracefully", () => {
+    const { getByText } = render(
+      <Forecast title={undefined} items={undefined} />
+    );
+
+    getByText("Forecast data not found.");
   });
 });

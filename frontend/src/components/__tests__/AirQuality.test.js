@@ -2,11 +2,15 @@ import React from "react";
 import { render } from "@testing-library/react";
 import AirQuality from "../AirQuality";
 
-describe("AirQuality", () => {
-  const airQuality = {
+function buildAirQuality() {
+  return {
     "2022-02-01": [10, 20, 30],
     "2022-02-02": [15, 25, 35],
   };
+}
+
+describe("AirQuality", () => {
+  const airQuality = buildAirQuality();
   const timezone = 3600;
   const timestamp = 1643798400;
 
@@ -19,8 +23,20 @@ describe("AirQuality", () => {
       />
     );
 
-    expect(getAllByText("15")).toHaveLength(1);
-    expect(getAllByText("25")).toHaveLength(1);
-    expect(getAllByText("35")).toHaveLength(1);
+    for (let item in airQuality["2022-02-02"]) {
+      expect(getAllByText(airQuality["2022-02-02"][item])).toHaveLength(1);
+    }
+  });
+
+  it("handles errors gracefully", () => {
+    const { getByText } = render(
+      <AirQuality
+        airQuality={undefined}
+        timezone={timezone}
+        timestamp={timestamp}
+      />
+    );
+
+    getByText("Air quality data not found.");
   });
 });

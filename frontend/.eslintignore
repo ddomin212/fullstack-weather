@@ -1,0 +1,6 @@
+/build
+/node_modules
+*.cy.js
+cypress.*
+App.js
+/docs

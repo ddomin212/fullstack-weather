@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/WeatherStats.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/WeatherStats.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import {
+  UilTemperature,
+  UilWater,
+  UilWind,
+  UilCompress,
+  UilEye,
+  UilRaindrops,
+} from "@iconscout/react-unicons";
+import WeatherInfo from "./WeatherInfo";
+
+/**
+ * Renders a weather stats component.
+ * @param {Object} props - The component props.
+ * @param {Object} props.stats - The weather stats to display.
+ * @param {number} props.stats.feels_like - The "feels like" temperature.
+ * @param {number} props.stats.humidity - The humidity.
+ * @param {number} props.stats.wind_speed - The wind speed.
+ * @param {Object} props.stats.units - The units to use for the weather data.
+ * @param {number} props.stats.pressure - The atmospheric pressure.
+ * @param {number} props.stats.visibility - The visibility.
+ * @param {number} props.stats.rain - The amount of rain.
+ * @returns {JSX.Element} - The rendered weather stats component.
+ */
+function WeatherStats({
+  stats: {
+    feels_like,
+    humidity,
+    wind_speed,
+    units,
+    pressure,
+    rain,
+    visibility,
+  },
+}) {
+  const weatherInfoData = [
+    [
+      {
+        icon: &lt;UilTemperature size={18} className="mr-1" />,
+        label: "RealFeel",
+        value: `${feels_like.toFixed()}°`,
+      },
+      {
+        icon: &lt;UilWater size={18} className="mr-1" />,
+        label: "Humidity",
+        value: `${humidity.toFixed()}%`,
+      },
+      {
+        icon: &lt;UilWind size={18} className="mr-1" />,
+        label: "Wind",
+        value: `${wind_speed.toFixed()} ${units.wind_speed}`,
+      },
+    ],
+    [
+      {
+        icon: &lt;UilCompress size={18} className="mr-1" />,
+        label: "Pressure",
+        value: `${pressure.toFixed()} hPa`,
+      },
+      {
+        icon: &lt;UilRaindrops size={18} className="mr-1" />,
+        label: "Rain",
+        value: `${rain.toFixed()} mm`,
+      },
+      {
+        icon: &lt;UilEye size={18} className="mr-1" />,
+        label: "Visibility",
+        value: `${visibility.toFixed() / 1000} km`,
+      },
+    ],
+  ];
+
+  /**
+   * Renders the weather stats component.
+   * @returns {JSX.Element} - The rendered weather stats component.
+   */
+  return (
+    &lt;>
+      {weatherInfoData.map((col, idx1) => (
+        &lt;div
+          className={`flex flex-col space-y-2 ${
+            idx1 === 1 ? "hidden xs:flex" : ""
+          }`}
+          key={idx1}
+        >
+          {col.map((item, idx2) => (
+            &lt;WeatherInfo
+              key={idx1 * 3 + idx2}
+              icon={item.icon}
+              label={item.label}
+              value={item.value}
+            />
+          ))}
+        &lt;/div>
+      ))}
+    &lt;/>
+  );
+}
+
+export default WeatherStats;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SignInButton.html">SignInButton</a></li><li><a href="module-authService.html">authService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AirQuality">AirQuality</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Forecast">Forecast</a></li><li><a href="global.html#ForecastItem">ForecastItem</a></li><li><a href="global.html#Inputs">Inputs</a></li><li><a href="global.html#QueryInput">QueryInput</a></li><li><a href="global.html#SelectItem">SelectItem</a></li><li><a href="global.html#SelectOptions">SelectOptions</a></li><li><a href="global.html#SunStat">SunStat</a></li><li><a href="global.html#SunStats">SunStats</a></li><li><a href="global.html#TemperatureAndDetails">TemperatureAndDetails</a></li><li><a href="global.html#TimeAndLocation">TimeAndLocation</a></li><li><a href="global.html#WeatherChart">WeatherChart</a></li><li><a href="global.html#WeatherInfo">WeatherInfo</a></li><li><a href="global.html#WeatherStats">WeatherStats</a></li><li><a href="global.html#buyPremium">buyPremium</a></li><li><a href="global.html#calcOffset">calcOffset</a></li><li><a href="global.html#createChartData">createChartData</a></li><li><a href="global.html#fetchWeather">fetchWeather</a></li><li><a href="global.html#formatCurrentWeather">formatCurrentWeather</a></li><li><a href="global.html#formatHourlyWeather">formatHourlyWeather</a></li><li><a href="global.html#formatToLocalTime">formatToLocalTime</a></li><li><a href="global.html#getDailyMax">getDailyMax</a></li><li><a href="global.html#getFormattedWeatherData">getFormattedWeatherData</a></li><li><a href="global.html#getWeatherData">getWeatherData</a></li><li><a href="global.html#iconUrlFromCode">iconUrlFromCode</a></li><li><a href="global.html#setXYValues">setXYValues</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 17 2023 11:07:02 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

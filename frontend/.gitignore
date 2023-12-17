@@ -30,3 +30,4 @@ localhost_3000-20231014T120555.html
 cypress.env.json
 serviceAccount.json
 /docs
+database.rules.json

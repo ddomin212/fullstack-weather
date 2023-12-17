@@ -33,7 +33,7 @@ class OpenMeteoParser:
             response["daily"]["windspeed_10m_mean"],
             response["daily"]["relative_humidity_2m_mean"],
             response["daily"]["precipitation_sum"],
-            response["daily"]["cloudcover_mean"],
+            response["daily"]["cloud_cover_mean"],
             response["daily"]["pressure_msl_mean"],
         ):
             temp_dict = {}

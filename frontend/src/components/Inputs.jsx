@@ -80,7 +80,7 @@ function Inputs({ setQuery, units, setUnits, setUserData, userData }) {
   }, [setQuery]);
 
   /**
-   * Renders the inputs component. TODO: tidy up the styling.
+   * Renders the inputs component.
    * @returns {JSX.Element} - The rendered inputs component.
    */
   return (

@@ -1,8 +1,10 @@
+# pylint: disable=E0401
+
 import os
 
 import aioredis
 import sentry_sdk
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
@@ -16,12 +18,11 @@ from routes.weather import router as weather_router
 
 
 def initialize_middleware(app: FastAPI) -> None:
-    origins = ["http://localhost:3000", "http://0.0.0.0:3000"]
 
     # Set all CORS enabled origins
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins,
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -32,8 +33,8 @@ def initialize_middleware(app: FastAPI) -> None:
         TrustedHostMiddleware,
         allowed_hosts=[
             os.getenv("SECRET_HOST_HEADER"),
-            "0.0.0.0",
             "*.sentry.io",
+            "*.web.app"
         ],
     )
 

@@ -1,0 +1,3005 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Pylint report</title>
+        <meta charset="utf-8">
+        <meta name="description" content="auto generated pylint report from JSON">
+        <style type="text/css">
+        body {
+            padding: 1em;
+            margin: 0;
+            background-color: #fffffe;
+            font-family: sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.5em;
+            border: 1px solid #333333;
+        }
+        th {
+            background-color: #DCDCDC;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>Pylint report from report.jinja2</h1>
+
+        
+
+        <h2>Messages</h2>
+        
+        <h3>Module <code>app</code> (<code>backend/app.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>config.cfg_app</code> (<code>backend/config/cfg_app.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused Response imported from fastapi</pre></td>
+            </tr>
+            
+            <tr>
+                <td>20</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>initialize_middleware</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>50</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (111/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>65</td>
+                <td>37</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>initialize_app.http_exception_handler</td>
+                <td><pre>Unused argument &#39;request&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>74</td>
+                <td>39</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>initialize_app.csrf_protect_exception_handler</td>
+                <td><pre>Unused argument &#39;request&#39;</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>config.firebase</code> (<code>backend/config/firebase.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==legacy.api:[97:167]
+==utils.parsers.open_weather:[16:84]
+        data = {
+            &#34;dt&#34;: response[&#34;dt&#34;],
+            &#34;timezone&#34;: response[&#34;timezone&#34;],
+            &#34;temp&#34;: response[&#34;main&#34;][&#34;temp&#34;],
+            &#34;temp_min&#34;: response[&#34;main&#34;][&#34;temp_min&#34;],
+            &#34;temp_max&#34;: response[&#34;main&#34;][&#34;temp_max&#34;],
+            &#34;lat&#34;: response[&#34;coord&#34;][&#34;lat&#34;],
+            &#34;lon&#34;: response[&#34;coord&#34;][&#34;lon&#34;],
+            &#34;feels_like&#34;: response[&#34;main&#34;][&#34;feels_like&#34;],
+            &#34;pressure&#34;: response[&#34;main&#34;][&#34;pressure&#34;],
+            &#34;humidity&#34;: response[&#34;main&#34;][&#34;humidity&#34;],
+            &#34;clouds&#34;: response[&#34;clouds&#34;][&#34;all&#34;],
+            &#34;wind_speed&#34;: response[&#34;wind&#34;][&#34;speed&#34;],
+            &#34;visibility&#34;: response[&#34;visibility&#34;],
+            &#34;rain&#34;: response.get(&#34;rain&#34;, {}).get(&#34;1h&#34;, 0),
+            &#34;weather_main&#34;: response[&#34;weather&#34;][0][&#34;main&#34;],
+            &#34;weather_description&#34;: response[&#34;weather&#34;][0][&#34;description&#34;],
+            &#34;weather_icon&#34;: response[&#34;weather&#34;][0][&#34;icon&#34;],
+            &#34;sunrise&#34;: response[&#34;sys&#34;][&#34;sunrise&#34;],
+            &#34;sunset&#34;: response[&#34;sys&#34;][&#34;sunset&#34;],
+        }
+        return CurrentWeather(**data)
+
+    def parse_forecast(
+        self,
+        response: dict[
+            str,
+            dict[str, str]
+            | list[dict[str, int | list[dict[str, str]] | dict[str, float | int]]],
+        ],
+    ) -&gt; Forecast:
+        &#34;&#34;&#34;Parse the response from the API call to get the forecast data
+
+        Args:
+            response: Response from OpenWeatherMap API
+
+        Returns:
+            Forecast: 5 day forecast data for the city (in 3 hour intervals)
+        &#34;&#34;&#34;
+        data = {
+            &#34;name&#34;: response[&#34;city&#34;][&#34;name&#34;],
+            &#34;country&#34;: response[&#34;city&#34;][&#34;country&#34;],
+            &#34;lat&#34;: response[&#34;city&#34;][&#34;coord&#34;][&#34;lat&#34;],
+            &#34;lon&#34;: response[&#34;city&#34;][&#34;coord&#34;][&#34;lon&#34;],
+            &#34;forecasts&#34;: [
+                {
+                    &#34;dt&#34;: weather[&#34;dt&#34;],
+                    &#34;temp&#34;: weather[&#34;main&#34;][&#34;temp&#34;],
+                    &#34;temp_min&#34;: weather[&#34;main&#34;][&#34;temp_min&#34;],
+                    &#34;temp_max&#34;: weather[&#34;main&#34;][&#34;temp_max&#34;],
+                    &#34;feels_like&#34;: weather[&#34;main&#34;][&#34;feels_like&#34;],
+                    &#34;pressure&#34;: weather[&#34;main&#34;][&#34;pressure&#34;],
+                    &#34;humidity&#34;: weather[&#34;main&#34;][&#34;humidity&#34;],
+                    &#34;clouds&#34;: weather[&#34;clouds&#34;][&#34;all&#34;],
+                    &#34;wind_speed&#34;: weather[&#34;wind&#34;][&#34;speed&#34;],
+                    &#34;visibility&#34;: weather[&#34;visibility&#34;],
+                    &#34;rain&#34;: round(weather.get(&#34;rain&#34;, {}).get(&#34;3h&#34;, 0) / 3, 2),
+                    &#34;weather_main&#34;: weather[&#34;weather&#34;][0][&#34;main&#34;],
+                    &#34;weather_description&#34;: weather[&#34;weather&#34;][0][&#34;description&#34;],
+                    &#34;weather_icon&#34;: weather[&#34;weather&#34;][0][&#34;icon&#34;],
+                    &#34;pod&#34;: weather[&#34;sys&#34;][&#34;pod&#34;],
+                    &#34;rain_prob&#34;: weather[&#34;pop&#34;],
+                    &#34;dt_txt&#34;: weather[&#34;dt_txt&#34;],
+                }
+                for weather in response[&#34;list&#34;]
+            ],
+        }
+        return Forecast(**data)
+
+</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==legacy.models:[9:68]
+==models.weather:[5:62]
+class BaseWeather(BaseModel):
+    &#34;&#34;&#34;Pydantic model for weather data validation&#34;&#34;&#34;
+
+    dt: int
+    temp: float
+    temp_min: float
+    temp_max: float
+    feels_like: float
+    pressure: int
+    humidity: int
+    clouds: int
+    wind_speed: float
+    visibility: int
+    rain: float
+    weather_main: str
+    weather_description: str
+    weather_icon: str
+
+
+class ClimateStats(BaseModel):
+    &#34;&#34;&#34;Pydantic model for climate statistics data validation&#34;&#34;&#34;
+
+    climate: list[dict[str, float | int]]
+
+
+class AirQuality(BaseModel):
+    &#34;&#34;&#34;Pydantic model for air quality data validation&#34;&#34;&#34;
+
+    aqi: dict[str, list[int]]
+
+
+class CurrentWeather(BaseWeather):
+    &#34;&#34;&#34;Pydantic model for current weather data validation&#34;&#34;&#34;
+
+    lat: float
+    lon: float
+    sunrise: int
+    sunset: int
+    timezone: int
+
+
+class ThreeHourWeather(BaseWeather):
+    &#34;&#34;&#34;Pydantic model for 3 hour weather data validation&#34;&#34;&#34;
+
+    pod: str
+    rain_prob: float
+    dt_txt: str
+
+
+class Forecast(BaseModel):
+    &#34;&#34;&#34;Pydantic model for forecast data validation&#34;&#34;&#34;
+
+    name: str
+    country: str
+    lat: float
+    lon: float
+    forecasts: list[ThreeHourWeather]</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==legacy.api:[183:202]
+==utils.parsers.open_meteo:[62:81]
+        air_quality = {}
+        for x, *params in zip(
+            response[&#34;hourly&#34;][&#34;time&#34;],
+            response[&#34;hourly&#34;][&#34;european_aqi&#34;],
+            response[&#34;hourly&#34;][&#34;european_aqi_pm2_5&#34;],
+            response[&#34;hourly&#34;][&#34;european_aqi_pm10&#34;],
+            response[&#34;hourly&#34;][&#34;european_aqi_no2&#34;],
+            response[&#34;hourly&#34;][&#34;european_aqi_o3&#34;],
+            response[&#34;hourly&#34;][&#34;european_aqi_so2&#34;],
+        ):
+            if x.split(&#34;T&#34;)[0] not in air_quality:
+                air_quality[x.split(&#34;T&#34;)[0]] = [0] * len(params)
+            for idx, aqi in enumerate(params):
+                if aqi:
+                    air_quality[x.split(&#34;T&#34;)[0]][idx] = (
+                        aqi
+                        if air_quality[x.split(&#34;T&#34;)[0]][idx] &lt; aqi
+                        else air_quality[x.split(&#34;T&#34;)[0]][idx]
+                    )</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==legacy.api:[256:273]
+==utils.parsers.open_meteo:[18:35]
+        climate_stats = []
+        new_keys = [
+            &#34;temp&#34;,
+            &#34;wind_speed&#34;,
+            &#34;humidity&#34;,
+            &#34;rain&#34;,
+            &#34;clouds&#34;,
+            &#34;pressure&#34;,
+            &#34;title&#34;,
+        ]
+        today = date.today().strftime(&#34;%m-%d&#34;)
+        for x, *params in zip(
+            response[&#34;daily&#34;][&#34;time&#34;],
+            response[&#34;daily&#34;][&#34;temperature_2m_mean&#34;],
+            response[&#34;daily&#34;][&#34;windspeed_10m_mean&#34;],
+            response[&#34;daily&#34;][&#34;relative_humidity_2m_mean&#34;],
+            response[&#34;daily&#34;][&#34;precipitation_sum&#34;],</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==legacy.api:[274:286]
+==utils.parsers.open_meteo:[36:48]
+            response[&#34;daily&#34;][&#34;pressure_msl_mean&#34;],
+        ):
+            temp_dict = {}
+            year, month_day = x.split(&#34;-&#34;, 1)
+            all_params = params + [year]
+            if month_day == today:
+                for metric, key in zip(all_params, new_keys):
+                    if metric:
+                        temp_dict[key] = metric
+                    else:
+                        temp_dict[key] = 0
+                climate_stats.append(temp_dict)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==routes.auth:[68:98]
+==routes.weather:[80:109]
+    except HTTPError as e:
+        response = handle_pyrebase(e)
+        raise HTTPException(
+            detail=f&#34;Error in firebase: {response[0][&#39;error&#39;]}&#34;, status_code=response[1]
+        )
+
+
+@handle_exception
+@router.post(
+    &#34;/weather/coordinates&#34;, dependencies=[Depends(RateLimiter(times=30, seconds=60))]
+)
+async def weather_by_coordinates(
+    authToken: AuthToken, lat: float, lon: float, units: str = &#34;metric&#34;
+):
+    &#34;&#34;&#34;Get weather data for a set of coordinates
+
+    Args:
+        lat: latitude
+        lon: longitude
+        units: units of measurement, can be metric or imperial. Defaults to &#34;metric&#34;.
+
+    Raises:
+        e: Python exception
+        HTTPException: API call failed
+
+    Returns:
+        dict: weather data for the set of coordinates
+    &#34;&#34;&#34;
+    try:</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==legacy.models:[68:75]
+==models.security:[11:18]
+class AuthToken(BaseModel):
+    token: str
+    refreshToken: Optional[str] = None
+
+
+class CsrfSettings(BaseModel):
+    secret_key: str = os.getenv(&#34;CSRF_SECRET_KEY&#34;)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>legacy.api</code> (<code>backend/legacy/api.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused numpy imported as np</pre></td>
+            </tr>
+            
+            <tr>
+                <td>41</td>
+                <td>31</td>
+                <td>warning</td>
+                <td><code>redefined-builtin</code></td>
+                <td>W0622</td>
+                <td>OpenWeatherAPI.get_api_response</td>
+                <td><pre>Redefining built-in &#39;type&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>56</td>
+                <td>19</td>
+                <td>warning</td>
+                <td><code>missing-timeout</code></td>
+                <td>W3101</td>
+                <td>OpenWeatherAPI.get_api_response</td>
+                <td><pre>Missing timeout argument for method &#39;requests.get&#39; can cause your program to hang indefinitely</pre></td>
+            </tr>
+            
+            <tr>
+                <td>169</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>OpenMeteoAPI</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>176</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (103/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>219</td>
+                <td>14</td>
+                <td>error</td>
+                <td><code>no-member</code></td>
+                <td>E1101</td>
+                <td>OpenMeteoAPI.get_air_quality</td>
+                <td><pre>Instance of &#39;OpenMeteoAPI&#39; has no &#39;parse_query&#39; member</pre></td>
+            </tr>
+            
+            <tr>
+                <td>220</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (123/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>222</td>
+                <td>19</td>
+                <td>warning</td>
+                <td><code>missing-timeout</code></td>
+                <td>W3101</td>
+                <td>OpenMeteoAPI.get_air_quality</td>
+                <td><pre>Missing timeout argument for method &#39;requests.get&#39; can cause your program to hang indefinitely</pre></td>
+            </tr>
+            
+            <tr>
+                <td>295</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (111/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>298</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (114/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>311</td>
+                <td>14</td>
+                <td>error</td>
+                <td><code>no-member</code></td>
+                <td>E1101</td>
+                <td>OpenMeteoAPI.get_historical_data</td>
+                <td><pre>Instance of &#39;OpenMeteoAPI&#39; has no &#39;parse_query&#39; member</pre></td>
+            </tr>
+            
+            <tr>
+                <td>312</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (195/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>315</td>
+                <td>19</td>
+                <td>warning</td>
+                <td><code>missing-timeout</code></td>
+                <td>W3101</td>
+                <td>OpenMeteoAPI.get_historical_data</td>
+                <td><pre>Missing timeout argument for method &#39;requests.get&#39; can cause your program to hang indefinitely</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>legacy.models</code> (<code>backend/legacy/models.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td>0</td>
+                <td>error</td>
+                <td><code>no-name-in-module</code></td>
+                <td>E0611</td>
+                <td></td>
+                <td><pre>No name &#39;BaseModel&#39; in module &#39;pydantic&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>BaseWeather</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>29</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>ClimateStats</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>35</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>AirQuality</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>41</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>CurrentWeather</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>51</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>ThreeHourWeather</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>59</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>Forecast</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>69</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>AuthToken</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>69</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>AuthToken</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>74</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>CsrfSettings</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>74</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>CsrfSettings</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>models.security</code> (<code>backend/models/security.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td>0</td>
+                <td>error</td>
+                <td><code>no-name-in-module</code></td>
+                <td>E0611</td>
+                <td></td>
+                <td><pre>No name &#39;BaseModel&#39; in module &#39;pydantic&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>AuthToken</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>AuthToken</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>CsrfSettings</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>CsrfSettings</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>models.weather</code> (<code>backend/models/weather.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td>0</td>
+                <td>error</td>
+                <td><code>no-name-in-module</code></td>
+                <td>E0611</td>
+                <td></td>
+                <td><pre>No name &#39;BaseModel&#39; in module &#39;pydantic&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>BaseWeather</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>25</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>ClimateStats</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>31</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>AirQuality</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>37</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>CurrentWeather</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>47</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>ThreeHourWeather</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>55</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>too-few-public-methods</code></td>
+                <td>R0903</td>
+                <td>Forecast</td>
+                <td><pre>Too few public methods (0/2)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>routes.auth</code> (<code>backend/routes/auth.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>get_csrf_token</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>25</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>invalid-name</code></td>
+                <td>C0103</td>
+                <td>login</td>
+                <td><pre>Argument name &#34;authToken&#34; doesn&#39;t conform to snake_case naming style</pre></td>
+            </tr>
+            
+            <tr>
+                <td>26</td>
+                <td>4</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>login</td>
+                <td><pre>Unused argument &#39;request&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>28</td>
+                <td>4</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>login</td>
+                <td><pre>Unused argument &#39;csrf_protect&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>71</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>login</td>
+                <td><pre>Consider explicitly re-raising using &#39;raise HTTPException(detail=f&#34;Error in firebase: {response[0][&#39;error&#39;]}&#34;, status_code=response[1]) from e&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>79</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>invalid-name</code></td>
+                <td>C0103</td>
+                <td>refresh</td>
+                <td><pre>Argument name &#34;authToken&#34; doesn&#39;t conform to snake_case naming style</pre></td>
+            </tr>
+            
+            <tr>
+                <td>80</td>
+                <td>4</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>refresh</td>
+                <td><pre>Unused argument &#39;request&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>82</td>
+                <td>4</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>refresh</td>
+                <td><pre>Unused argument &#39;csrf_protect&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>110</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>refresh</td>
+                <td><pre>Consider explicitly re-raising using &#39;raise HTTPException(detail=f&#34;Error in firebase: {response[0][&#39;error&#39;]}&#34;, status_code=response[1]) from e&#39;</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>routes.payment</code> (<code>backend/routes/payment.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>25</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>create_checkout_session</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>26</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>invalid-name</code></td>
+                <td>C0103</td>
+                <td>create_checkout_session</td>
+                <td><pre>Argument name &#34;authToken&#34; doesn&#39;t conform to snake_case naming style</pre></td>
+            </tr>
+            
+            <tr>
+                <td>27</td>
+                <td>4</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>create_checkout_session</td>
+                <td><pre>Unused argument &#39;request&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>29</td>
+                <td>4</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>create_checkout_session</td>
+                <td><pre>Unused argument &#39;csrf_protect&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>49</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (141/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>50</td>
+                <td>23</td>
+                <td>warning</td>
+                <td><code>f-string-without-interpolation</code></td>
+                <td>W1309</td>
+                <td>create_checkout_session</td>
+                <td><pre>Using an f-string that does not have any interpolated variables</pre></td>
+            </tr>
+            
+            <tr>
+                <td>67</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>create_checkout_session</td>
+                <td><pre>Consider explicitly re-raising using &#39;raise HTTPException(detail=f&#34;Error in firebase: {response[0][&#39;error&#39;]}&#34;, status_code=response[1]) from e&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>71</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>create_checkout_session</td>
+                <td><pre>Consider explicitly re-raising using &#39;raise HTTPException(detail=f&#39;Error in stripe: {e.user_message}&#39;, status_code=e.http_status) from e&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>78</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>payment_success</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>87</td>
+                <td>8</td>
+                <td>refactor</td>
+                <td><code>no-else-return</code></td>
+                <td>R1705</td>
+                <td>payment_success</td>
+                <td><pre>Unnecessary &#34;else&#34; after &#34;return&#34;, remove the &#34;else&#34; and de-indent the code inside it</pre></td>
+            </tr>
+            
+            <tr>
+                <td>89</td>
+                <td>40</td>
+                <td>warning</td>
+                <td><code>f-string-without-interpolation</code></td>
+                <td>W1309</td>
+                <td>payment_success</td>
+                <td><pre>Using an f-string that does not have any interpolated variables</pre></td>
+            </tr>
+            
+            <tr>
+                <td>94</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (103/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>97</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>payment_success</td>
+                <td><pre>Consider explicitly re-raising using &#39;raise HTTPException(detail=f&#34;Error in firebase: {response[0][&#39;error&#39;]}&#34;, status_code=response[1]) from e&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>101</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>payment_success</td>
+                <td><pre>Consider explicitly re-raising using &#39;except KeyError as exc&#39; and &#39;raise HTTPException(detail=&#39;Verification token not found&#39;, status_code=400) from exc&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>103</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>payment_success</td>
+                <td><pre>Consider explicitly re-raising using &#39;except TypeError as exc&#39; and &#39;raise HTTPException(detail=&#39;Verification token not found&#39;, status_code=400) from exc&#39;</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>routes.weather</code> (<code>backend/routes/weather.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>36</td>
+                <td>4</td>
+                <td>refactor</td>
+                <td><code>no-else-return</code></td>
+                <td>R1705</td>
+                <td>call_api</td>
+                <td><pre>Unnecessary &#34;else&#34; after &#34;return&#34;, remove the &#34;else&#34; and de-indent the code inside it</pre></td>
+            </tr>
+            
+            <tr>
+                <td>60</td>
+                <td>26</td>
+                <td>convention</td>
+                <td><code>invalid-name</code></td>
+                <td>C0103</td>
+                <td>weather_by_city</td>
+                <td><pre>Argument name &#34;authToken&#34; doesn&#39;t conform to snake_case naming style</pre></td>
+            </tr>
+            
+            <tr>
+                <td>83</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>weather_by_city</td>
+                <td><pre>Consider explicitly re-raising using &#39;raise HTTPException(detail=f&#34;Error in firebase: {response[0][&#39;error&#39;]}&#34;, status_code=response[1]) from e&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>93</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>invalid-name</code></td>
+                <td>C0103</td>
+                <td>weather_by_coordinates</td>
+                <td><pre>Argument name &#34;authToken&#34; doesn&#39;t conform to snake_case naming style</pre></td>
+            </tr>
+            
+            <tr>
+                <td>118</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>weather_by_coordinates</td>
+                <td><pre>Consider explicitly re-raising using &#39;raise HTTPException(detail=f&#34;Error in firebase: {response[0][&#39;error&#39;]}&#34;, status_code=response[1]) from e&#39;</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>services.open_meteo</code> (<code>backend/services/open_meteo.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused import requests</pre></td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>OpenMeteoAPI</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>21</td>
+                <td>8</td>
+                <td>warning</td>
+                <td><code>redefined-builtin</code></td>
+                <td>W0622</td>
+                <td>OpenMeteoAPI.get_api_response</td>
+                <td><pre>Redefining built-in &#39;type&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>41</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (102/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>49</td>
+                <td>31</td>
+                <td>convention</td>
+                <td><code>singleton-comparison</code></td>
+                <td>C0121</td>
+                <td>OpenMeteoAPI.get_api_response</td>
+                <td><pre>Comparison &#39;data[&#39;error&#39;] == True&#39; should be &#39;data[&#39;error&#39;] is True&#39; if checking for the singleton value True, or &#39;bool(data[&#39;error&#39;])&#39; if testing for truthiness</pre></td>
+            </tr>
+            
+            <tr>
+                <td>54</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>trailing-whitespace</code></td>
+                <td>C0303</td>
+                <td></td>
+                <td><pre>Trailing whitespace</pre></td>
+            </tr>
+            
+            <tr>
+                <td>71</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (121/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>82</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (111/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>85</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (114/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>98</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (194/100)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>services.open_weather_api</code> (<code>backend/services/open_weather_api.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused import requests</pre></td>
+            </tr>
+            
+            <tr>
+                <td>48</td>
+                <td>31</td>
+                <td>warning</td>
+                <td><code>redefined-builtin</code></td>
+                <td>W0622</td>
+                <td>OpenWeatherAPI.get_api_response</td>
+                <td><pre>Redefining built-in &#39;type&#39;</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.conftest</code> (<code>backend/tests/conftest.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused db imported from config.firebase</pre></td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_app</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>19</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>csrf_token</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>19</td>
+                <td>15</td>
+                <td>warning</td>
+                <td><code>redefined-outer-name</code></td>
+                <td>W0621</td>
+                <td>csrf_token</td>
+                <td><pre>Redefining name &#39;test_app&#39; from outer scope (line 11)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>33</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>additional_params</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>33</td>
+                <td>22</td>
+                <td>warning</td>
+                <td><code>redefined-outer-name</code></td>
+                <td>W0621</td>
+                <td>additional_params</td>
+                <td><pre>Redefining name &#39;csrf_token&#39; from outer scope (line 19)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>33</td>
+                <td>22</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>additional_params</td>
+                <td><pre>Unused argument &#39;csrf_token&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>47</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>auth_client</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>47</td>
+                <td>16</td>
+                <td>warning</td>
+                <td><code>redefined-outer-name</code></td>
+                <td>W0621</td>
+                <td>auth_client</td>
+                <td><pre>Redefining name &#39;test_app&#39; from outer scope (line 11)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>47</td>
+                <td>26</td>
+                <td>warning</td>
+                <td><code>redefined-outer-name</code></td>
+                <td>W0621</td>
+                <td>auth_client</td>
+                <td><pre>Redefining name &#39;additional_params&#39; from outer scope (line 33)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>63</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>paid_client</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>63</td>
+                <td>16</td>
+                <td>warning</td>
+                <td><code>redefined-outer-name</code></td>
+                <td>W0621</td>
+                <td>paid_client</td>
+                <td><pre>Redefining name &#39;test_app&#39; from outer scope (line 11)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>63</td>
+                <td>26</td>
+                <td>warning</td>
+                <td><code>redefined-outer-name</code></td>
+                <td>W0621</td>
+                <td>paid_client</td>
+                <td><pre>Redefining name &#39;additional_params&#39; from outer scope (line 33)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.parsing.test_open_meteo_parser</code> (<code>backend/tests/parsing/test_open_meteo_parser.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused ClimateStats imported from models.weather</pre></td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>TestOpenMeteoParser</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>40</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenMeteoParser.test_historical_data</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>55</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenMeteoParser.test_parse_air_quality</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.parsing.test_open_weather_parser</code> (<code>backend/tests/parsing/test_open_weather_parser.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>TestOpenWeatherParser</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td>46</td>
+                <td>warning</td>
+                <td><code>unused-variable</code></td>
+                <td>W0612</td>
+                <td>TestOpenWeatherParser.setUpClass</td>
+                <td><pre>Unused variable &#39;response&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>89</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenWeatherParser.test_current_weather</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>119</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenWeatherParser.test_forecast</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.routes.test_auth</code> (<code>backend/tests/routes/test_auth.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_login</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>20</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_refresh</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>50</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_logout</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.routes.test_middlware</code> (<code>backend/tests/routes/test_middlware.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_trusted_host_middleware</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>43</td>
+                <td>warning</td>
+                <td><code>unused-argument</code></td>
+                <td>W0613</td>
+                <td>test_trusted_host_middleware</td>
+                <td><pre>Unused argument &#39;additional_params&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_fastapi_query_check_missing</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>33</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_fastapi_body_check_missing</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>52</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_fastapi_not_found</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>62</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_rate_limiter</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.routes.test_payment</code> (<code>backend/tests/routes/test_payment.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused RedirectResponse imported from fastapi.responses</pre></td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_create_payment_session</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>26</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_payment_success</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.routes.test_weather</code> (<code>backend/tests/routes/test_weather.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td>47</td>
+                <td>warning</td>
+                <td><code>redefined-outer-name</code></td>
+                <td>W0621</td>
+                <td>_test_weather</td>
+                <td><pre>Redefining name &#39;client&#39; from outer scope (line 4)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>24</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_weather_by_city</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>31</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_weather_by_coordinates</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>47</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_weather_anonymous</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>53</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_weather_wrong_token</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>63</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>test_weather_openweather_exception</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.services.test_open_meteo_api</code> (<code>backend/tests/services/test_open_meteo_api.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>TestOpenMeteoAPI</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenMeteoAPI.test_get_air_quality</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>19</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenMeteoAPI.test_get_historical_data</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>25</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenMeteoAPI.test_get_api_response_climate</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>27</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (118/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>34</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenMeteoAPI.test_get_api_response_error</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>36</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (118/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>39</td>
+                <td>12</td>
+                <td>warning</td>
+                <td><code>unused-variable</code></td>
+                <td>W0612</td>
+                <td>TestOpenMeteoAPI.test_get_api_response_error</td>
+                <td><pre>Unused variable &#39;response&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>46</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenMeteoAPI.test_get_api_response_missing</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>48</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (119/100)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.services.test_open_weather_api</code> (<code>backend/tests/services/test_open_weather_api.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>TestOpenWeatherAPI</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenWeatherAPI.test_get_weather</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>22</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenWeatherAPI.test_get_forecast</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>28</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenWeatherAPI.test_get_api_response</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>36</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestOpenWeatherAPI.test_get_api_error</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.services.test_services_utils</code> (<code>backend/tests/services/test_services_utils.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>TestServices</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestServices.test_parse_query</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestServices.test_units_appendix</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>tests.test_errors</code> (<code>backend/tests/test_errors.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>TestErrors</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestErrors.test_handle_exception</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>20</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestErrors.test_http_error</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>24</td>
+                <td>45</td>
+                <td>warning</td>
+                <td><code>unused-variable</code></td>
+                <td>W0612</td>
+                <td>TestErrors.test_http_error</td>
+                <td><pre>Unused variable &#39;cm&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>27</td>
+                <td>4</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>TestErrors.test_handle_pyrebase</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>47</td>
+                <td>15</td>
+                <td>warning</td>
+                <td><code>broad-exception-caught</code></td>
+                <td>W0718</td>
+                <td>TestErrors.test_handle_pyrebase</td>
+                <td><pre>Catching too general exception Exception</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>utils.errors</code> (<code>backend/utils/errors.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>0</td>
+                <td>warning</td>
+                <td><code>unused-import</code></td>
+                <td>W0611</td>
+                <td></td>
+                <td><pre>Unused HTTPError imported from requests.exceptions</pre></td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>handle_pyrebase</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>25</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-function-docstring</code></td>
+                <td>C0116</td>
+                <td>handle_exception</td>
+                <td><pre>Missing function or method docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>30</td>
+                <td>12</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>handle_exception.wrapper</td>
+                <td><pre>Consider explicitly re-raising using &#39;except ValueError as exc&#39; and &#39;raise HTTPException(detail=&#39;Missing request data or parameters&#39;, status_code=400) from exc&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>34</td>
+                <td>12</td>
+                <td>warning</td>
+                <td><code>raise-missing-from</code></td>
+                <td>W0707</td>
+                <td>handle_exception.wrapper</td>
+                <td><pre>Consider explicitly re-raising using &#39;except TypeError as exc&#39; and &#39;raise HTTPException(detail=&#39;Invalid request data or parameters&#39;, status_code=400) from exc&#39;</pre></td>
+            </tr>
+            
+            <tr>
+                <td>37</td>
+                <td>15</td>
+                <td>warning</td>
+                <td><code>broad-exception-caught</code></td>
+                <td>W0718</td>
+                <td>handle_exception.wrapper</td>
+                <td><pre>Catching too general exception Exception</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>utils.parsers.open_meteo</code> (<code>backend/utils/parsers/open_meteo.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>OpenMeteoParser</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>55</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (103/100)</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>utils.parsers.open_weather</code> (<code>backend/utils/parsers/open_weather.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-class-docstring</code></td>
+                <td>C0115</td>
+                <td>OpenWeatherParser</td>
+                <td><pre>Missing class docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>utils.services</code> (<code>backend/utils/services.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>25</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-final-newline</code></td>
+                <td>C0304</td>
+                <td></td>
+                <td><pre>Final newline missing</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>utils.settings</code> (<code>backend/utils/settings.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+        </table>
+        
+
+        <h2>Metrics</h2>
+        
+
+        <h3>Count per types</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+            </tr>
+            
+            <tr>
+                <td>convention</td>
+                <td>111</td>
+            </tr>
+            
+            <tr>
+                <td>warning</td>
+                <td>49</td>
+            </tr>
+            
+            <tr>
+                <td>error</td>
+                <td>5</td>
+            </tr>
+            
+            <tr>
+                <td>refactor</td>
+                <td>25</td>
+            </tr>
+            
+        </table>
+        
+
+        <h3>Count per messages</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+            </tr>
+            
+            <tr>
+                <td>missing-module-docstring</td>
+                <td>28</td>
+            </tr>
+            
+            <tr>
+                <td>missing-function-docstring</td>
+                <td>44</td>
+            </tr>
+            
+            <tr>
+                <td>redefined-outer-name</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>unused-argument</td>
+                <td>10</td>
+            </tr>
+            
+            <tr>
+                <td>unused-import</td>
+                <td>8</td>
+            </tr>
+            
+            <tr>
+                <td>missing-class-docstring</td>
+                <td>14</td>
+            </tr>
+            
+            <tr>
+                <td>unused-variable</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>broad-exception-caught</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>line-too-long</td>
+                <td>17</td>
+            </tr>
+            
+            <tr>
+                <td>raise-missing-from</td>
+                <td>11</td>
+            </tr>
+            
+            <tr>
+                <td>missing-final-newline</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>no-name-in-module</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>too-few-public-methods</td>
+                <td>16</td>
+            </tr>
+            
+            <tr>
+                <td>redefined-builtin</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>trailing-whitespace</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>singleton-comparison</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>missing-timeout</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>no-member</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>invalid-name</td>
+                <td>5</td>
+            </tr>
+            
+            <tr>
+                <td>f-string-without-interpolation</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>no-else-return</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>duplicate-code</td>
+                <td>7</td>
+            </tr>
+            
+        </table>
+        
+
+        <h3>Count per modules</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+            </tr>
+            
+            <tr>
+                <td>app</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>tests.conftest</td>
+                <td>14</td>
+            </tr>
+            
+            <tr>
+                <td>tests.test_errors</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>tests.parsing.test_open_weather_parser</td>
+                <td>5</td>
+            </tr>
+            
+            <tr>
+                <td>tests.parsing.test_open_meteo_parser</td>
+                <td>5</td>
+            </tr>
+            
+            <tr>
+                <td>tests.services.test_open_weather_api</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>tests.services.test_services_utils</td>
+                <td>4</td>
+            </tr>
+            
+            <tr>
+                <td>tests.services.test_open_meteo_api</td>
+                <td>11</td>
+            </tr>
+            
+            <tr>
+                <td>tests.routes.test_middlware</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>tests.routes.test_auth</td>
+                <td>4</td>
+            </tr>
+            
+            <tr>
+                <td>tests.routes.test_weather</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>tests.routes.test_payment</td>
+                <td>4</td>
+            </tr>
+            
+            <tr>
+                <td>utils.errors</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>utils.services</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>utils.settings</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>utils.parsers.open_meteo</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>utils.parsers.open_weather</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>models.security</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>models.weather</td>
+                <td>8</td>
+            </tr>
+            
+            <tr>
+                <td>services.open_weather_api</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>services.open_meteo</td>
+                <td>11</td>
+            </tr>
+            
+            <tr>
+                <td>legacy.api</td>
+                <td>14</td>
+            </tr>
+            
+            <tr>
+                <td>legacy.models</td>
+                <td>12</td>
+            </tr>
+            
+            <tr>
+                <td>routes.payment</td>
+                <td>16</td>
+            </tr>
+            
+            <tr>
+                <td>routes.weather</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>routes.auth</td>
+                <td>10</td>
+            </tr>
+            
+            <tr>
+                <td>config.cfg_app</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>config.firebase</td>
+                <td>8</td>
+            </tr>
+            
+        </table>
+        
+
+        <h3>Count per path</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+            </tr>
+            
+            <tr>
+                <td>backend/app.py</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/conftest.py</td>
+                <td>14</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/test_errors.py</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/parsing/test_open_weather_parser.py</td>
+                <td>5</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/parsing/test_open_meteo_parser.py</td>
+                <td>5</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/services/test_open_weather_api.py</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/services/test_services_utils.py</td>
+                <td>4</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/services/test_open_meteo_api.py</td>
+                <td>11</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/routes/test_middlware.py</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/routes/test_auth.py</td>
+                <td>4</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/routes/test_weather.py</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>backend/tests/routes/test_payment.py</td>
+                <td>4</td>
+            </tr>
+            
+            <tr>
+                <td>backend/utils/errors.py</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td>backend/utils/services.py</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>backend/utils/settings.py</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>backend/utils/parsers/open_meteo.py</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>backend/utils/parsers/open_weather.py</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>backend/models/security.py</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>backend/models/weather.py</td>
+                <td>8</td>
+            </tr>
+            
+            <tr>
+                <td>backend/services/open_weather_api.py</td>
+                <td>3</td>
+            </tr>
+            
+            <tr>
+                <td>backend/services/open_meteo.py</td>
+                <td>11</td>
+            </tr>
+            
+            <tr>
+                <td>backend/legacy/api.py</td>
+                <td>14</td>
+            </tr>
+            
+            <tr>
+                <td>backend/legacy/models.py</td>
+                <td>12</td>
+            </tr>
+            
+            <tr>
+                <td>backend/routes/payment.py</td>
+                <td>16</td>
+            </tr>
+            
+            <tr>
+                <td>backend/routes/weather.py</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>backend/routes/auth.py</td>
+                <td>10</td>
+            </tr>
+            
+            <tr>
+                <td>backend/config/cfg_app.py</td>
+                <td>6</td>
+            </tr>
+            
+            <tr>
+                <td>backend/config/firebase.py</td>
+                <td>8</td>
+            </tr>
+            
+        </table>
+        
+
+    </body>
+</html>

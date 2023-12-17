@@ -8,7 +8,7 @@ import ForecastItem from "./ForecastItem";
  * @returns {JSX.Element} - The rendered forecast component.
  */
 function Forecast({ title, items }) {
-  return (
+  return items ? (
     <div className="">
       <div className="flex items-center justify-start mt-6">
         <p className="text-white font-medium uppercase">{title}</p>
@@ -16,11 +16,13 @@ function Forecast({ title, items }) {
       <hr className="my-2" />
 
       <div className="flex flex-row items-center justify-between text-white flex-wrap">
-        {items.slice(0, 6).map((item, index) => (
+        {items?.slice(0, 6).map((item, index) => (
           <ForecastItem key={index} item={item} />
         ))}
       </div>
     </div>
+  ) : (
+    <p>Forecast data not found.</p>
   );
 }
 

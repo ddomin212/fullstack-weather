@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Inputs from "./components/Inputs";
+import TimeAndLocation from "./components/TimeAndLocation";
+import TemperatureAndDetails from "./components/TemperatureAndDetails";
+import Forecast from "./components/Forecast";
+import ChartView from "./components/ChartView";
+import fetchWeather from "./services/weatherService";
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { buyPremium } from "./services/accountService";
+import AirQuality from "./components/AirQuality";
+import {
+  refreshUserToken,
+  signInUser,
+  signOutUser,
+} from "./services/authService";
+import { auth } from "./services/firebaseService";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import urlParse from "url-parse";
+/**
+ * The main component of the weather app.
+ * @returns {JSX.Element} - The main component of the weather app.
+ */
+function App() {
+  const [query, setQuery] = useState(null);
+  const [units, setUnits] = useState("metric");
+  const [weather, setWeather] = useState(null);
+  const [userData, setUserData] = useState({ tier: "" });
+  const parsedUrl = urlParse(window.location.href, true);
+
+  const bypassLogin = () => {
+    signInWithEmailAndPassword(
+      auth,
+      parsedUrl.query.email,
+      parsedUrl.query.password
+    ).then((result) => signInUser({ result, setUserData }));
+  };
+
+  useEffect(() => {
+    if (parsedUrl.pathname === "/bypassLogin") {
+      bypassLogin();
+    } else if (parsedUrl.pathname === "/instantLogout") {
+      signOutUser({ setUserData });
+    } else {
+      refreshUserToken({ setUserData }, () => {});
+    }
+  }, [query, units]);
+
+  useEffect(() => {
+    if (query) {
+      if (userData) {
+        fetchWeather({
+          query,
+          units,
+          setWeather,
+          token: userData.token,
+          refreshToken: userData.refreshToken,
+        }).catch((err) => {
+          console.log(err);
+          toast.error(err.message);
+        });
+      } else {
+        fetchWeather({
+          query,
+          units,
+          setWeather,
+          token: "empty",
+        }).catch((err) => {
+          toast.error(err.message);
+        });
+      }
+    }
+  }, [query, units, userData?.tier]);
+
+  /**
+   * Formats the background gradient based on the current weather data.
+   * @returns {string} - The CSS class for the background gradient.
+   */
+  const formatBackground = () => {
+    if (!weather) return "from-cyan-700 to-blue-700";
+    const hotThreshold = units === "metric" ? 30 : 86;
+    const coldThreshold = units === "metric" ? 5 : 41;
+    if (weather.temp &lt;= hotThreshold &amp;&amp; weather.temp >= coldThreshold) {
+      return "from-cyan-700 to-blue-700";
+    } else if (weather.temp > hotThreshold) {
+      return "from-yellow-700 to-yellow-300";
+    } else {
+      return "from-blue-300 to-gray-300";
+    }
+  };
+
+  /**
+   * Gets the premium tier for the user.
+   * @returns {Promise&lt;void>} - A Promise that resolves when the premium tier is fetched.
+   */
+  const getPremium = () => buyPremium({ userData, setUserData });
+
+  return (
+    &lt;div
+      className={`mx-auto max-w-screen-md mt-4 py-5 px-5 md:px-32 bg-gradient-to-br h-fit shadow-xl shadow-gray-400 ${formatBackground()}`}
+    >
+      &lt;Inputs
+        setQuery={setQuery}
+        units={units}
+        setUnits={setUnits}
+        setUserData={setUserData}
+        userData={userData}
+      />
+
+      {weather &amp;&amp; (
+        &lt;div>
+          &lt;TimeAndLocation weather={weather} username={userData?.user} />
+          &lt;TemperatureAndDetails weather={weather} />
+
+          &lt;Forecast title="hourly forecast" items={weather.hourly} />
+          {userData?.tier === "paid" ? (
+            &lt;>
+              &lt;Forecast
+                title="daily forecast"
+                items={Object.values(weather.daily).slice(0, 6)}
+              />
+              &lt;ChartView
+                items={weather.hourly}
+                daily={Object.values(weather.daily).slice(0, 6)}
+                units={weather.units}
+                yearly={weather.historical}
+              />
+              &lt;AirQuality
+                airQuality={weather.air_quality}
+                timezone={weather.timezone}
+                timestamp={weather.dt}
+              />
+            &lt;/>
+          ) : (
+            &lt;button
+              onClick={getPremium}
+              data-testid="premium-button"
+              class="text-white border border-white rounded-lg py-2 px-4 mt-6 mx-auto transition ease-out hover:scale-110"
+            >
+              Get premium to see more!
+            &lt;/button>
+          )}
+        &lt;/div>
+      )}
+
+      &lt;ToastContainer autoClose={1500} theme="colored" newestOnTop={true} />
+    &lt;/div>
+  );
+}
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SignInButton.html">SignInButton</a></li><li><a href="module-authService.html">authService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AirQuality">AirQuality</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Forecast">Forecast</a></li><li><a href="global.html#ForecastItem">ForecastItem</a></li><li><a href="global.html#Inputs">Inputs</a></li><li><a href="global.html#QueryInput">QueryInput</a></li><li><a href="global.html#SelectItem">SelectItem</a></li><li><a href="global.html#SelectOptions">SelectOptions</a></li><li><a href="global.html#SunStat">SunStat</a></li><li><a href="global.html#SunStats">SunStats</a></li><li><a href="global.html#TemperatureAndDetails">TemperatureAndDetails</a></li><li><a href="global.html#TimeAndLocation">TimeAndLocation</a></li><li><a href="global.html#WeatherChart">WeatherChart</a></li><li><a href="global.html#WeatherInfo">WeatherInfo</a></li><li><a href="global.html#WeatherStats">WeatherStats</a></li><li><a href="global.html#buyPremium">buyPremium</a></li><li><a href="global.html#calcOffset">calcOffset</a></li><li><a href="global.html#createChartData">createChartData</a></li><li><a href="global.html#fetchWeather">fetchWeather</a></li><li><a href="global.html#formatCurrentWeather">formatCurrentWeather</a></li><li><a href="global.html#formatHourlyWeather">formatHourlyWeather</a></li><li><a href="global.html#formatToLocalTime">formatToLocalTime</a></li><li><a href="global.html#getDailyMax">getDailyMax</a></li><li><a href="global.html#getFormattedWeatherData">getFormattedWeatherData</a></li><li><a href="global.html#getWeatherData">getWeatherData</a></li><li><a href="global.html#iconUrlFromCode">iconUrlFromCode</a></li><li><a href="global.html#setXYValues">setXYValues</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Dec 17 2023 11:07:02 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

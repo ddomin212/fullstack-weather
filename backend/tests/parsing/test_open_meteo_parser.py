@@ -17,7 +17,7 @@ class TestOpenMeteoParser(unittest.TestCase):
                 "windspeed_10m_mean": [10.0, 11.0, 12.0],
                 "relative_humidity_2m_mean": [50.0, 60.0, 70.0],
                 "precipitation_sum": [0.0, 0.0, 0.0],
-                "cloudcover_mean": [0.0, 0.0, 0.0],
+                "cloud_cover_mean": [0.0, 0.0, 0.0],
                 "pressure_msl_mean": [1000.0, 1001.0, 1002.0],
             }
         }
