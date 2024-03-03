@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Change to backend directory
-      run: cd backend
+      run: |
+        cd backend
     - uses: actions/checkout@v3
     - name: Login to Heroku Container registry
       run: heroku container:login
