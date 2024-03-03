@@ -2,9 +2,7 @@ name: Run backend, frontend, and e2e tests
 
 on:
     push:
-      branches: [ main ]
-    pull_request:
-      branches: [ main ]
+      branches: [ main, dev ]
 
 jobs:
     build:

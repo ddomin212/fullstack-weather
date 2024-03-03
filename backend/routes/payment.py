@@ -28,6 +28,17 @@ async def create_checkout_session(
     response: Response,
     csrf_protect: CsrfProtect = Depends(),
 ):
+    """create payment session
+
+    Args:
+        authToken: firebase JWT token
+
+    Raises:
+        HTTPException: if session creation fails
+
+    Returns:
+        dict: payment session details
+    """
     # Validate CSRF token
     # csrf_protect.validate_csrf(request)
 
@@ -76,6 +87,18 @@ async def create_checkout_session(
 @handle_exception
 @router.get("/payment-success")
 async def payment_success(session_id: str, guid: str):
+    """handle payment success
+
+    Args:
+        session_id: stripe session id
+        guid: firebase user id
+
+    Raises:
+        HTTPException: if verification token does not match
+
+    Returns:
+        RedirectResponse: to the frontend
+    """
     # Verify payment session
     try:
         # Get the verification token from the database

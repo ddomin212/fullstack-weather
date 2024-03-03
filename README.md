@@ -43,7 +43,7 @@ We use Jest and Pytest for testing and coverage reports. Links can be found [her
 
 ### Linter Reports
 
-We use ESLint for linting our JavaScript code. To view the linter report head [here](https://ddomin212.github.io/fullstack-weather/frontend/reports/report.html)
+We use ESLint for linting our JavaScript code. To view the linter report head [here](https://ddomin212.github.io/fullstack-weather/frontend/report.html)
 
 This will lint your code and output any issues to the console.
 
@@ -59,4 +59,4 @@ Contributions are welcome! Please open an issue or pull request if you find a bu
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE.md) file for details.

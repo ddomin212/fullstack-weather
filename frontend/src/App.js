@@ -28,6 +28,11 @@ function App() {
   const [userData, setUserData] = useState({ tier: "" });
   const parsedUrl = urlParse(window.location.href, true);
 
+  /**
+   * Bypasses the login page and logs in the user using the provided email and password. -- For testing purposes only.
+   * @returns {void} - The function does not return anything.
+   * @throws {Error} - The function throws an error if the login fails.
+   */
   const bypassLogin = () => {
     signInWithEmailAndPassword(
       auth,

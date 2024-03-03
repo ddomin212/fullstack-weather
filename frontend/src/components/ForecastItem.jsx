@@ -7,7 +7,7 @@ import { iconUrlFromCode } from "../utils/parsingUtils";
  * @param {Object} props.item - The forecast item to render.
  * @param {string} props.item.title - The title of the forecast item.
  * @param {string} props.item.icon - The code for the weather icon.
- * @param {number} props.item.temp - The temperature in degrees Celsius.
+ * @param {number} props.item.temp - The temperature in degrees.
  * @param {number} props.index - The index of the item in the list.
  * @returns {JSX.Element} - The rendered component.
  */

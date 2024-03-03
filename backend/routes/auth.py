@@ -13,6 +13,14 @@ router = APIRouter()
 
 @router.get("/csrftoken")
 async def get_csrf_token(csrf_protect: CsrfProtect = Depends()):
+    """get CSRF token
+
+    Args:
+        csrf_protect (CsrfProtect, optional): CSRF protection. Defaults to Depends().
+
+    Returns:
+        dict: CSRF token
+    """
     csrf_token, signed_token = csrf_protect.generate_csrf_tokens()
     response = JSONResponse({"detail": "CSRF cookie set", "csrf": csrf_token})
     csrf_protect.set_csrf_cookie(signed_token, response)

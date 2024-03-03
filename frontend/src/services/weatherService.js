@@ -6,6 +6,8 @@ import urlParse from "url-parse";
  * Fetches weather data from the server.
  * @param {string} infoType - The type of information to fetch (either "city" or "coordinates").
  * @param {Object} searchParams - The search parameters to include in the request URL.
+ * @param {string} token - The user's token.
+ * @param {string} refreshToken - The user's refresh token.
  * @returns {Promise<Object>} - A Promise that resolves to the weather data as an object.
  */
 const getWeatherData = (infoType, searchParams, token, refreshToken) => {
@@ -35,6 +37,8 @@ const getWeatherData = (infoType, searchParams, token, refreshToken) => {
 /**
  * Fetches and formats weather data from the server.
  * @param {Object} searchParams - The search parameters to include in the request URL.
+ * @param {string} token - The user's token.
+ * @param {string} refreshToken - The user's refresh token.
  * @returns {Promise<Object>} - A Promise that resolves to the formatted weather data as an object.
  */
 const getFormattedWeatherData = async (searchParams, token, refreshToken) => {
@@ -58,6 +62,8 @@ const getFormattedWeatherData = async (searchParams, token, refreshToken) => {
  * @param {Object} options.query - The query object.
  * @param {string} options.units - The units to use for the weather data.
  * @param {Function} options.setWeather - The function to set the weather data.
+ * @param {string} options.token - The user's token.
+ * @param {string} options.refreshToken - The user's refresh token.
  * @returns {Promise<void>} - A Promise that resolves when the weather data is fetched.
  */
 const fetchWeather = async ({

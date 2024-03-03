@@ -10,9 +10,11 @@ load_dotenv()
 
 
 class AuthToken(BaseModel):
+    """Pydantic model for authentication token data validation"""
     token: str
     refreshToken: Optional[str] = None
 
 
 class CsrfSettings(BaseModel):
+    """Pydantic model for CSRF settings data validation"""
     secret_key: str = os.getenv("CSRF_SECRET_KEY")

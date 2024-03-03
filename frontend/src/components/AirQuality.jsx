@@ -3,11 +3,12 @@ import { formatToLocalTime } from "../utils/timeUtils";
 import { AIR_QUALITY_METRICS } from "../utils/settings";
 
 /**
- * Renders a forecast component.
- * @param {Object} props - The component props.
- * @param {string} props.title - The title of the forecast.
- * @param {Array} props.items - The forecast data items to display.
- * @returns {JSX.Element} - The rendered forecast component.
+ * The component for displaying air quality data.
+ * @param {object} props - The component props.
+ * @param {object} props.airQuality - The air quality data.
+ * @param {string} props.timezone - The timezone of the location.
+ * @param {number} props.timestamp - The timestamp of the data.
+ * @returns {JSX.Element} - The air quality component.
  */
 function AirQuality({ airQuality, timezone, timestamp }) {
   const time = formatToLocalTime(timestamp, timezone, "yyyy-MM-dd");

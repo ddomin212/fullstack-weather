@@ -1,0 +1,21 @@
+name: Deploy to Heroku
+on:
+  push:
+    branches: [ main, dev ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Change to backend directory
+      run: cd backend
+    - uses: actions/checkout@v3
+    - name: Login to Heroku Container registry
+      run: heroku container:login
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    - name: Build and push to Heroku Container Registry
+      run: |
+        heroku container:push web --app weather-v2-app
+        heroku container:release web --app weather-v2-app
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
