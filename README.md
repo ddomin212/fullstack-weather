@@ -12,7 +12,7 @@ This is a simple weather application built with FastAPI and React.
 ## Installation
 Have your own enviroment variables ready, otherwise, the **project WILL NOT load**. What you need is:
 1. GCP Account and Service Account JSON
-2. Redis database (loacl or cloud)
+2. Redis database (local or cloud)
 3. OpenMeteo API key
 4. Stripe API key
 5. Sentry API Key
