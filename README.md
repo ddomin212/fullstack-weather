@@ -9,7 +9,7 @@ This is a simple weather application built with FastAPI and React.
 - Paid users can view additional weather information, including air quality and historical weather
 - Users can view weather information in both Celsius and Fahrenheit
 
-## Installation
+## Pre-requisites
 Have your own enviroment variables ready, otherwise, the **project WILL NOT load**. What you need is:
 1. GCP Account and Service Account JSON
 2. Redis database (local or cloud)
@@ -17,6 +17,7 @@ Have your own enviroment variables ready, otherwise, the **project WILL NOT load
 4. Stripe API key
 5. Sentry API Key
 
+### Run locally
 The process is as follows
 1. Clone the repository
 2. Install the required dependencies:
@@ -37,6 +38,8 @@ The process is as follows
    ```
    npm start --host 0.0.0.0
    ```
+
+Or visit [here](https://weather-app-dp-09cbea493b09.herokuapp.com/)
 
 ## Documentation
 
